@@ -19,10 +19,6 @@ class Inscription
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateInscription = null;
 
-    #[ORM\OneToOne()]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Compte $compte = null;
-
     #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Restauration::class, orphanRemoval: true)]
     private Collection $restaurations;
 
@@ -31,6 +27,9 @@ class Inscription
 
     #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'inscriptions')]
     private Collection $ateliers;
+
+    #[ORM\OneToOne(mappedBy: 'inscription', cascade: ['persist', 'remove'])]
+    private ?Compte $compte = null;
 
     public function __construct()
     {
@@ -57,17 +56,6 @@ class Inscription
         return $this;
     }
 
-    public function getCompte(): ?Compte
-    {
-        return $this->compte;
-    }
-
-    public function setCompte(Compte $compte): self
-    {
-        $this->compte = $compte;
-
-        return $this;
-    }
 
     public function getRestaurations(): ?Restauration
     {
@@ -153,6 +141,28 @@ class Inscription
     public function removeAtelier(Atelier $atelier): self
     {
         $this->ateliers->removeElement($atelier);
+
+        return $this;
+    }
+
+    public function getCompte(): ?Compte
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?Compte $compte): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($compte === null && $this->compte !== null) {
+            $this->compte->setInscription(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($compte !== null && $compte->getInscription() !== $this) {
+            $compte->setInscription($this);
+        }
+
+        $this->compte = $compte;
 
         return $this;
     }

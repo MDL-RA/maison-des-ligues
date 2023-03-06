@@ -8,10 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReactController extends AbstractController
 {
-    #[Route('/react', name: 'app_react')]
+    #[Route('/connexion', name: 'app_connexion')]
     public function index(): Response
     {
-        return $this->render('react/index.html.twig', [
+        return $this->render('react/login.html.twig', [
         ]);
     }
 }
