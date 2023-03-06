@@ -1,6 +1,6 @@
 doctrine:
     dbal:
-         default_connection : mdlmaison
+         default_connection : mdl
          connections : 
             mdl:
                 driver: 'pdo_mysql'
