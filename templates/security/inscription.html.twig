@@ -40,8 +40,8 @@
                             <div class="row">
                                 <div class="input-field col s12 ">
                                     <i class="material-icons prefix">perm_identity</i>
-                                    {{ form_widget(registrationForm.numLicence, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
-                                    <label for="registration_form_numLicence">Numéro Licencié</label>
+                                    {{ form_widget(registrationForm.numLicence, {'attr': {'class': 'validate', 'required' : 'true', 'data-length' : '11', 'type': 'text'}}) }}
+                                    <label for="registration_form_numLicence">Numéro Licencie</label>
                                 </div>
                                 <div class="input-field col s12 ">
                                     <i class="material-icons prefix">email</i>
