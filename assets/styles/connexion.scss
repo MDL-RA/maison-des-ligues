@@ -80,13 +80,15 @@
     text-align: center;
 }
 
-.btn{
+.waves-effect.waves-light.btn{
     background-color  : #FEC816;
 }
 
-.btn:hover{
-    background-color  : #FEC816;
+.waves-effect.waves-light.btn:hover {
+    background-color: #FFE48B;
 }
+
+
 
 .input-field input[type=email]:focus + label{
     color : #FEC816!important;
@@ -104,4 +106,8 @@
 .input-field input[type=password]:focus{
     border-bottom:1px solid #FEC816!important;
     box-shadow: 0 1px 0 0 #FEC816!important;
+}
+
+.input-field .prefix.active {
+    color: #212121ed!important;
 }
