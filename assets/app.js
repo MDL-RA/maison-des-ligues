@@ -13,3 +13,5 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
+
+import './materialize-init';

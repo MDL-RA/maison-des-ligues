@@ -8,6 +8,7 @@
         "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
         "@symfony/webpack-encore": "^4.0.0",
         "core-js": "^3.23.0",
+        "file-loader": "6.0.0",
         "node-sass": "^8.0.0",
         "react": "^18.0",
         "react-dom": "^18.0",
@@ -29,6 +30,7 @@
     "dependencies": {
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
-        "@mui/material": "^5.11.11"
+        "@mui/material": "^5.11.11",
+        "materialize-css": "^1.0.0"
     }
 }

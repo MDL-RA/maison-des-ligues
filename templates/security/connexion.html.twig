@@ -5,30 +5,33 @@
 {% block body %}
     <div class="wrapper">
         <div class="div-1">
-            <div class="polygon-shape"></div>
+            <div class="polygon-shape">
+            </div>
+             <div class="login-img">
+                    <img src="{{ asset('build/image/mdl.png') }}" />
+                    <p>
+                        Application de gestioon des inscriptions aux congrés
+                    </p>
+             </div>
         </div>
         <div class="div-2">
             <div class="container-login">
-
-                <form class="form-login" method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-
-
-                    <label for="inputEmail">Email</label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                    <label for="inputPassword">Mot de passe</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-                    <input type="hidden" name="_csrf_token"
-                           value="{{ csrf_token('authenticate') }}"
-                           >
-
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        Se connecter
-                    </button>
-                </form>
+                    <div class="row">
+                        <form class="col s12" method="post">
+                            <h3>Connexion</h3>
+                            <div class="row">
+                                <div class="input-field col s12 ">
+                                    <input id="email" type="email" class="validate">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate">
+                                    <label for="password">Mot de passe</label>
+                                </div>
+                                <button class="waves-effect waves-light btn" type="sumbit">Se Connecter</button>
+                            </div>
+                        </form>
+                    </div>
                 <div>
                     <p>
                         Vous ne posséder pas de compte ?
