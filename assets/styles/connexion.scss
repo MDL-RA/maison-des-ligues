@@ -86,13 +86,20 @@
     background-color: #FFE48B;
 }
 
-
-
 .input-field input[type=email]:focus + label{
     color : #FEC816!important;
 }
 
 .input-field input[type=email]:focus {
+    border-bottom:1px solid #FEC816!important;
+    box-shadow: 0 1px 0 0 #FEC816!important;
+}
+
+.input-field input[type=text]:focus + label{
+    color : #FEC816!important;
+}
+
+.input-field input[type=text]:focus {
     border-bottom:1px solid #FEC816!important;
     box-shadow: 0 1px 0 0 #FEC816!important;
 }
@@ -132,3 +139,13 @@
 .register-link:hover::before {
     transform: scaleX(1);
 }
+
+.text-container{
+    height: 25%;
+}
+
+.text-container p {
+    color: white;
+    font-size: 25px;
+}
+

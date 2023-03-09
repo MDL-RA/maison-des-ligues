@@ -1,23 +1,70 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 
 {% block body %}
-    <registration-form></registration-form>
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>S'inscrire</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.numLicence) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+{#    {{ form_start(registrationForm) }}#}
+{#        {{ form_row(registrationForm.numLicence) }}#}
+{#        {{ form_row(registrationForm.email) }}#}
+{#        {{ form_row(registrationForm.plainPassword, {#}
+{#            label: 'Mot de passe'#}
+{#        }) }}#}
 
-        <button type="submit" class="btn">Enregistrer</button>
-    {{ form_end(registrationForm) }}
+{#        <button type="submit" class="btn">Enregistrer</button>#}
+{#    {{ form_end(registrationForm) }}#}
+
+        <div class="wrapper">
+            <div class="div-1">
+                <div class="polygon-shape">
+                </div>
+                <div class="login-img">
+                    <img src="{{ asset('build/image/mdl.png') }}" />
+                    <div class="text-container">
+                        <p>
+                            Application de gestion des inscriptions aux congrés
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="div-2">
+                <div class="container-login">
+                    <div class="row">
+                        {{ form_start(registrationForm,{'attr': {'class': 'col s12'}}) }}
+                            <h3>Inscription</h3>
+                            <div class="row">
+                                <div class="input-field col s12 ">
+                                    <i class="material-icons prefix">perm_identity</i>
+                                    {{ form_widget(registrationForm.numLicence, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+                                    <label for="registration_form_numLicence">Numéro Licencié</label>
+                                </div>
+                                <div class="input-field col s12 ">
+                                    <i class="material-icons prefix">email</i>
+                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'validate', 'required' : 'true', 'type': 'email'}}) }}
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">lock</i>
+                                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+                                    <label for="password">Mot de passe</label>
+                                </div>
+                                <button class="waves-effect waves-light btn" type="submit">S'inscrire</button>
+                            </div>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                    <div>
+                        <p>
+                            Vous posséder un compte ?
+                            <a href={{path("app_connexion")}} class="register-link"> Connectez-vous.</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}
+

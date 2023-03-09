@@ -3,15 +3,20 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
     <div class="wrapper">
         <div class="div-1">
             <div class="polygon-shape">
             </div>
              <div class="login-img">
                     <img src="{{ asset('build/image/mdl.png') }}" />
-                    <p>
-                        Application de gestioon des inscriptions aux congrés
-                    </p>
+                 <div class="text-container">
+                     <p>
+                         Application de gestion des inscriptions aux congrés
+                     </p>
+                 </div>
              </div>
         </div>
         <div class="div-2">
