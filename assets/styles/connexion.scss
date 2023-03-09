@@ -56,13 +56,11 @@
     box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
     -webkit-clip-path: polygon(0 0, 65% 0, 35% 100%, 0% 100%);
     clip-path: polygon(0 0, 65% 0, 35% 100%, 0% 100%);
-
 }
 .form-login{
     display: flex;
 
 }
-
 
 .container-login{
     position: relative;
@@ -85,7 +83,7 @@
 }
 
 .waves-effect.waves-light.btn:hover {
-    background-color: #ffd37e;
+    background-color: #FFE48B;
 }
 
 
