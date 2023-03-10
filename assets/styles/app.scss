@@ -1,5 +1,6 @@
 @import "~materialize-css/sass/materialize";
 @import "~./connexion.scss";
+@import "~./accueil.scss";
 
 $primary : #FEC816;
 $secondary : #164CFE;
@@ -14,6 +15,7 @@ $orange : #FEA616;
 body{
     font-family: 'Oswald', sans-serif;
     height: max-content;
+    background-color: #EDF2F4;
 }
 
 

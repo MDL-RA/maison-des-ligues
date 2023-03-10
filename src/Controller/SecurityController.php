@@ -26,11 +26,7 @@ class SecurityController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
     
-    #[Route('/', name: 'app_index')]
-    public function index(): Response {
-        return $this->redirectToRoute('app_connexion');
-        
-    }
+
     
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
@@ -91,12 +87,12 @@ class SecurityController extends AbstractController
     }
     
     
-    #[Route(path: '/connexion', name: 'app_connexion')]
+    #[Route(path: '/connexion', name: 'app_login')]
     public function connexion(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+         if ($this->getUser()) {
+            return $this->redirectToRoute('app_accueil');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

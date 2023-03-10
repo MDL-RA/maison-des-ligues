@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <nav>
+    <div class="nav-wrapper">
+      <a href="{{ path("app_accueil") }}" class="brand-logo center">
+          <img class="img-accueil" src="{{ asset('build/image/mdl.png') }}" />
+      </a>
+      <ul class="left hide-on-med-and-down">
+        <li><a href="">Ateliers</a></li>
+        <li><a href="">Formules d'hébergements</a></li>
+        {% if is_granted('ROLE_INSCRIT') %}
+            <li><a href="">Participation</a></li>
+        {% endif %}
+        
+      </ul>
+      <ul class="right hide-on-med-and-down">
+         {% if app.user %}
+            <li><a href="{{ path("app_deconnexion") }}" class="waves-effect waves-light btn" >Se déconnecter<a/><li>
+         {% else %}
+            <li><a href="{{ path("app_inscription") }}" class="waves-effect waves-light btn" >Inscription<a/><li> 
+            <li><a href="{{ path("app_login") }}" class="waves-effect waves-light btn" >Connexion<a/><li> 
+         {% endif %}
+        
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
