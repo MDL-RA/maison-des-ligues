@@ -1,6 +1,6 @@
-async function fetchNumLicencie()
+async function fetchNumLicencie(id)
 {
-    const response = await fetch('http://localhost:8002/api/licencies/1', {
+    const response = await fetch('http://localhost:8000/get/api/licencie/'+id, {
         method: "GET",
         mode: 'cors',
         cache: 'no-cache',
@@ -8,38 +8,23 @@ async function fetchNumLicencie()
             "Accept": "application/json",
         },
     })
-    return response.json();
+    if(response.status === 200){
+        return response.json();
+    }else{
+        throw new Error('La ressource demandée n\' a pas été trouvée');
+    }
+
 }
 
 
 window.addEventListener('load', async () => {
     const numLicencie = document.querySelector("#registration_form_numLicence");
-    const registerContainer = document.querySelector('.container-login');
     M.CharacterCounter.init(numLicencie);
-    let data = await fetchNumLicencie();
-    numLicencie.addEventListener('change', () => {
-        fetchNumLicencie().then((data) => console.log(data));
+    numLicencie.addEventListener('change', async () => {
+        console.log(numLicencie.value.length);
+        if (numLicencie.value.length === 11) {
+            await fetchNumLicencie(numLicencie.value).then((data) => console.log(data)).catch((error) => console.log(error));
+        }
+
     })
-    if(!data){
-        let loader = document.createElement("div");
-        let spinner = document.createElement("div");
-        let circle = document.createElement("div");
-        let circleLeft = document.createElement("div");
-        let circleGap = document.createElement("div");
-        let circleRight = document.createElement("div");
-        loader.classList.add('preloader-wrapper big active');
-        spinner.classList.add('spinner-layer spinner-blue-only');
-        circle.classList.add('circle');
-        circleLeft.classList.add('circle-clipper left');
-        circleGap.classList.add('gap-patch');
-        circleRight.classList.add('circle-clipper right');
-        loader.append(spinner);
-        spinner.append(circleLeft);
-        circleLeft.append(circle);
-        spinner.append(circleGap);
-        circleGap.append(circle);
-        spinner.append(circleRight);
-        circleRight.append(circle);
-        registerContainer.innerHTML=loader;
-    }
 })
