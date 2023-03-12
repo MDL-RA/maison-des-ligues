@@ -80,4 +80,13 @@ class CompteRepository extends ServiceEntityRepository implements PasswordUpgrad
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByNumLicence(int $numlicence)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.numlicence = :val')
+            ->setParameter('val', $numlicence)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }
