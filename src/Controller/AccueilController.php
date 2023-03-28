@@ -17,5 +17,5 @@ class AccueilController extends AbstractController {
     public function accueil(): Response {
         return $this->render('accueil/accueil.html.twig');
     }
-
+    
 }

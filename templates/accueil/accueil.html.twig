@@ -9,8 +9,8 @@
           <img class="img-accueil" src="{{ asset('build/image/mdl.png') }}" />
       </a>
       <ul class="left hide-on-med-and-down">
-        <li><a href="">Ateliers</a></li>
-        <li><a href="">Formules d'hébergements</a></li>
+        <li><a href="{{ path("app_ateliers") }}">Ateliers</a></li>
+        <li><a href="{{ path("app_formules") }}">Formules d'hébergements</a></li>
         {% if is_granted('ROLE_INSCRIT') %}
             <li><a href="">Participation</a></li>
         {% endif %}

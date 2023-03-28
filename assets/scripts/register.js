@@ -1,6 +1,15 @@
 async function fetchNumLicencie(id)
 {
-    const response = await fetch('http://localhost:8000/get/api/licencie/'+id, {
+    //const response = await fetch('http://localhost:8000/get/api/licencie/'+id, {
+    //    method: "GET",
+    //    mode: 'cors',
+    //    cache: 'no-cache',
+    //    headers: {
+    //        "Accept": "application/json",
+    //    },
+    //})
+    
+    const response = await fetch('http://api/api/licencies/'+id, {
         method: "GET",
         mode: 'cors',
         cache: 'no-cache',

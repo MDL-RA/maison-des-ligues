@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: CompteRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['numlicence'], message: 'Ce compte existe déjà !')]
 class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Id]
@@ -17,13 +17,10 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100, unique: true)]
-    private ?string $email = null;
-
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column]
+    #[ORM\Column(length: 12 ,unique: true)]
     private ?int $numlicence = null;
 
     /**
@@ -42,15 +39,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this->id;
     }
 
-    public function getEmail(): ?string {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self {
-        $this->email = $email;
-
-        return $this;
-    }
 
     /**
      * A visual identifier that represents this user.
