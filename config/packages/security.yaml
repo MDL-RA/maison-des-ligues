@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\Compte
-                property: numlicence
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,7 +17,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthentificatorAuthenticator
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_accueil
+
             logout:
                 path: app_deconnexion
                 # where to redirect after logout

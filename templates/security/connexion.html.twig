@@ -10,35 +10,41 @@
         <div class="div-1">
             <div class="polygon-shape">
             </div>
-             <div class="login-img">
-                 <a href="{{ path("app_accueil") }}"><img src="{{ asset('build/image/mdl.png') }}" /></a>
-                 <div class="text-container">
-                     <p>
-                         Application de gestion des inscriptions aux congrés
-                     </p>
-                 </div>
-             </div>
+            <div class="login-img">
+                <a href="{{ path("app_accueil") }}"><img src="{{ asset('build/image/mdl.png') }}" /></a>
+                <div class="text-container">
+                    <p>
+                        Application de gestion des inscriptions aux congrés
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="div-2">
             <div class="container-login">
-                    <div class="row">
-                        <form class="col s12" method="post" >
-                            <h3>Connexion</h3>
-                            <div class="row">
-                                <div class="input-field col s12 ">
-                                    <i class="material-icons prefix">perm_identity</i>
-                                    <input id="email" type="text" class="validate" required>
-                                    <label for="email">Numéro licencié</label>
-                                </div>
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">lock</i>
-                                    <input id="password" type="password" class="validate" required>
-                                    <label for="password">Mot de passe</label>
-                                </div>
-                                <button class="waves-effect waves-light btn" type="sumbit">Se Connecter</button>
+                <div class="row">
+                    <form class="col s12" method="post" action="{{ path('app_login') }}">
+                        <h3>Connexion</h3>
+                        <div class="row">
+                            <div class="input-field col s12 ">
+                                <i class="material-icons prefix">email</i>
+                                <input id="inputUsername" type="text" name="_username" class="validate" required>
+                                <label for="inputUsername">Email</label>
                             </div>
-                        </form>
-                    </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="inputPassword" type="password" name="_password" class="validate" required>
+                                <label for="inputPassword"">Mot de passe</label>
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <button class="waves-effect waves-light btn" type="sumbit">Se Connecter</button>
+                        </div>
+                    </form>
+                </div>
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
                 <div>
                     <p>
                         Vous ne posséder pas de compte ?

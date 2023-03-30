@@ -89,25 +89,25 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_inscription');
     }
     
-    
-    #[Route(path: '/connexion', name: 'app_login')]
-    public function connexion(AuthenticationUtils $authenticationUtils): Response
-    {
-         if ($this->getUser()) {
-            return $this->redirectToRoute('app_accueil');
-        }
 
+    #[Route(path: '/deconnexion', name: 'app_deconnexion')]
+    public function deconnexion(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    #[Route(path: '/connexion', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        //if ($this->getUser()) {
+        //     return $this->redirectToRoute('app_accueil');
+        //}
+         
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
-
-    #[Route(path: '/deconnexion', name: 'app_deconnexion')]
-    public function deconnexion(): void
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

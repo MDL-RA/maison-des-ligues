@@ -24,7 +24,7 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?int $numlicence = null;
 
     
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private ?string $email = null;
     /**
      * @var string The hashed password
