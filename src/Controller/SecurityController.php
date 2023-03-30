@@ -15,6 +15,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use App\Service\APIService;
 
 
 class SecurityController extends AbstractController
@@ -29,7 +30,7 @@ class SecurityController extends AbstractController
 
     
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService): Response
     {
         $user = new Compte();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -44,7 +45,9 @@ class SecurityController extends AbstractController
                 )
             
             );
-
+            
+            $user->setEmail($apiService->getLicencieById($form->get('numLicence')->getData())[0]['mail']);
+            
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -58,7 +61,7 @@ class SecurityController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_connexion');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/inscription.html.twig', [

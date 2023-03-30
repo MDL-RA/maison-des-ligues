@@ -36,7 +36,7 @@ class APIService {
         try {
             $response = $this->httpClient->request(
                     'GET',
-                    'http://api/api/clubs?page=1'
+                    'http://api/api/clubs/'
                     
             );
 
@@ -50,8 +50,8 @@ class APIService {
         try {
             $response = $this->httpClient->request(
                     'GET',
-//                    'http://api/api/licencies?page=1'
-                'http://php-symfony-api:80/api/licencies/',
+                    'http://api/api/licencies/'
+                //'http://php-symfony-api:80/api/licencies/',
             );
 
             return $this->decryptData($response->toArray());;
@@ -81,7 +81,8 @@ class APIService {
         try {
             $response = $this->httpClient->request(
                 'GET',
-                'http://php-symfony-api:80/api/licencies/'.$id,
+                //'http://php-symfony-api:80/api/licencies/'.$id,
+                'http://api/api/licencies/'.$id,
             );
           return $this->decryptData($response->toArray());
         }catch (\Exception $ex)

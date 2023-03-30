@@ -20,9 +20,12 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(length: 12 ,unique: true)]
+    #[ORM\Column(unique: true, type: 'bigint')]
     private ?int $numlicence = null;
 
+    
+    #[ORM\Column]
+    private ?string $email = null;
     /**
      * @var string The hashed password
      */
@@ -96,6 +99,16 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this;
     }
 
+     public function getEmail(): string {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self {
+        $this->email = $email;
+
+        return $this;
+    }
+    
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.

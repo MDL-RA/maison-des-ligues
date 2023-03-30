@@ -18,12 +18,12 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('numLicence', NumberType::class,[
-               'required' => true,
-               'attr'     => array(
-                'min'  => 0,
-                'max'  => 11,
-            ),
+                ->add('numLicence', NumberType::class,[
+                'attr' => [
+                    'min'=>00000000001,
+                    'max'=>99999999999,
+                ]
+  
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
