@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-
+use Symfony\Component\Validator\Constraints\IsFalse;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,7 +22,15 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'min'=>00000000001,
                     'max'=>99999999999,
+                ],
+                    
+                'constraints' => [
+                    new isFalse([
+                        'message' => 'Veuillez renseigner un numéro de licencié valide !',
+                    ]),
+                    
                 ]
+                    
   
             ])
             ->add('plainPassword', PasswordType::class, [

@@ -24,10 +24,17 @@
                 <div class="row">
                     <form class="col s12" method="post" action="{{ path('app_login') }}">
                         <h3>Connexion</h3>
+                         {% if error %}
+                             <div>
+                                 <p class="error-message">
+                                     Identifiant et/ou mot de passe incorrect ! 
+                                 </p>
+                             </div>
+                        {% endif %}
                         <div class="row">
                             <div class="input-field col s12 ">
                                 <i class="material-icons prefix">email</i>
-                                <input id="inputUsername" type="text" name="_username" class="validate" required>
+                                <input id="inputUsername" type="email" name="_username" class="validate" required>
                                 <label for="inputUsername">Email</label>
                             </div>
                             <div class="input-field col s12">
@@ -42,9 +49,6 @@
                         </div>
                     </form>
                 </div>
-                {% if error %}
-                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
                 <div>
                     <p>
                         Vous ne posséder pas de compte ?
