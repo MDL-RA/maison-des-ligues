@@ -7,8 +7,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class APIService {
 
-    private $api;
-
     public function __construct(HttpClientInterface $httpClient, private readonly ContainerInterface $container) {
         $this->httpClient = $httpClient->withOptions([
         'headers' => ['Accept' => 'application/json']
@@ -50,8 +48,8 @@ class APIService {
         try {
             $response = $this->httpClient->request(
                     'GET',
-                    'http://api/api/licencies/'
-                //'http://php-symfony-api:80/api/licencies/',
+//                    'http://api/api/licencies/'
+                'http://php-symfony-api:80/api/licencies/',
             );
 
             return $this->decryptData($response->toArray());;
@@ -73,22 +71,19 @@ class APIService {
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function getLicencieById(int $id): array
+    public function getLicencieById(int $id): ?array
     {
-        try {
             $response = $this->httpClient->request(
                 'GET',
-                //'http://php-symfony-api:80/api/licencies/'.$id,
-                'http://api/api/licencies/'.$id,
+                'http://php-symfony-api:80/api/licencies/'.$id,
+//                'http://api/api/licencies/'.$id,
             );
-          return $this->decryptData($response->toArray());
-        }catch (\Exception $ex)
-        {
-            throw new \Exception('Aucun licencié n\'a été trouvé');
-        }
+            if($response->getStatusCode() === 200)
+            {
+                return $this->decryptData($response->toArray());
+            }else {
+                return null;
+            }
     }
 
 

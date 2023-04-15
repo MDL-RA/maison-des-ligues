@@ -1,11 +1,20 @@
-<h1>Hi! Please confirm your email!</h1>
+{% apply inline_css(source('@styles/email-confirmed.css')) %}
+<div class='email-container'>
+    <div class='logo-container'>
+        <img src="{{ email.image('@images/mdl-black.png') }}" alt="Logo de la MDL">
+    </div>
+    <div class='box'>
+        <div class= 'content-container'>
+            <div class='image-container'>
+                <img src="{{ email.image('@images/escrime.png') }}" alt="image représentant des personnes pratiquant l\'escrime">
+            </div>
+            <h3>Confirmer votre inscription !</h3>
+            <p>Pour valider votre compte veuillez cliquer sur le bouton ci-dessous</p>
+            <a href='{{ url('app_verify_email', {token: token }) }}' class='bouton'>
+                Cliquez ici pour valider votre compte
+            </a>
+        </div>
+    </div>
+</div>
+{% endapply %}
 
-<p>
-    Please confirm your email address by clicking the following link: <br><br>
-    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
-    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
-</p>
-
-<p>
-    Cheers!
-</p>

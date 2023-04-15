@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class='email-container'>
+    <div class='logo-container'>
+        <img src="{{ asset('build/image/mdl-black.png') }}" alt="Logo de la MDL">
+    </div>
+    <div class='box'>
+        <div class='content-container'>
+            <div class='image-container'>
+                <img src="{{ asset('build/image/validate.png') }}" alt="image représentant une validation">
+            </div>
+            <h3>Votre compte est confirmé !</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

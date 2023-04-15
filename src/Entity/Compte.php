@@ -20,7 +20,7 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(unique: true, type: 'bigint')]
+    #[ORM\Column(type: 'bigint', unique: true)]
     private ?int $numlicence = null;
 
     
@@ -36,7 +36,10 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     private ?Inscription $inscription = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
+
+    #[ORM\Column(type: 'string',length: 255,nullable: true)]
+    private ?string $confirmationToken;
 
     public function getId(): ?int {
         return $this->id;
@@ -146,6 +149,17 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     {
         $this->isVerified = $isVerified;
 
+        return $this;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
         return $this;
     }
 
