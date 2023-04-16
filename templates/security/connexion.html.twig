@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% include 'modals/flash_message.html.twig' %}
+    <div class="wrapper">
+        <div class="div-1">
+            <div class="polygon-shape">
+            </div>
+            <div class="login-img">
+                <a href="{{ path("app_accueil") }}"><img src="{{ asset('build/image/mdl.png') }}" alt="image représentant une validation"/></a>
+                <div class="text-container">
+                    <p>
+                        Application de gestion des inscriptions aux congrés
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="div-2">
+            <div class="container-login">
+                <div class="row">
+                    <form class="col s12" method="post" action="{{ path('app_login') }}">
+                        <h3>Connexion</h3>
+                         {% if error %}
+                             <div>
+                                 <p class="error-message">
+                                     Identifiant et/ou mot de passe incorrect ! 
+                                 </p>
+                             </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="input-field col s12 ">
+                                <i class="material-icons prefix">email</i>
+                                <input id="inputUsername" type="email" name="_username" class="validate" required>
+                                <label for="inputUsername">Email</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input id="inputPassword" type="password" name="_password" class="validate" required>
+                                <label for="inputPassword">Mot de passe</label>
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <button class="waves-effect waves-light btn" type="submit">Se Connecter</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <p>
+                        Vous ne posséder pas de compte ?
+                        <a href={{path("app_inscription")}} class="register-link"> Inscrivez-vous.<a/>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>                
+{% endblock %}

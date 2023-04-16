@@ -1,0 +1,173 @@
+.wrapper{
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.div-1{
+    width:60%;
+    height: 100%;
+    background-color : #EDF2F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-img {
+    transform: translate(-80px,0px);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.login-img img{
+    width: 350px;
+    height: 350px;
+
+}
+
+
+.div-2{
+    width:40%;
+    height: 100%;
+    background-color : #EDF2F4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.polygon-shape{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #d3d0c9;
+    background-image: url('../image/login-background.jpg');
+    width: 100%;
+    height: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    filter: blur(4px);
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,.4);
+    -webkit-clip-path: polygon(0 0, 65% 0, 35% 100%, 0% 100%);
+    clip-path: polygon(0 0, 65% 0, 35% 100%, 0% 100%);
+}
+.form-login{
+    display: flex;
+
+}
+
+.container-login{
+    position: relative;
+    display: flex;
+    -webkit-box-shadow: 5px 5px 15px 5px #0000000a;
+    box-shadow: 5px 5px 15px 5px #0000000a;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    height: max-content;
+    width: 400px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.waves-effect.waves-light.btn{
+    background-color  : #FEC816;
+}
+
+.waves-effect.waves-light.btn:hover {
+    background-color: #FFE48B;
+}
+
+.input-field input[type=email]:focus + label{
+    color : #FEC816!important;
+}
+
+.input-field input[type=email]:focus {
+    border-bottom:1px solid #FEC816!important;
+    box-shadow: 0 1px 0 0 #FEC816!important;
+}
+
+.input-field input[type=text]:focus + label{
+    color : #FEC816!important;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom:1px solid #FEC816!important;
+    box-shadow: 0 1px 0 0 #FEC816!important;
+}
+
+.input-field input[type=password]:focus + label{
+    color : #FEC816!important;
+}
+
+.validate invalid{
+    border-bottom: 1px solid #F44336 !important;
+    box-shadow: 0 1px 0 0 #F44336 !important;
+}
+
+.input-field input[type=password]:focus{
+    border-bottom:1px solid #FEC816!important;
+    box-shadow: 0 1px 0 0 #FEC816!important;
+}
+
+.input-field .prefix.active {
+    color: #757575!important;
+}
+
+.register-link{
+    position: relative;
+    text-decoration: none;
+}
+
+.register-link::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #039be5;
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.3s ease;
+}
+
+.register-link:hover::before {
+    transform: scaleX(1);
+}
+
+.text-container{
+    height: 25%;
+}
+
+.text-container p {
+    color: white;
+    font-size: 25px;
+    transform: translate(0px,-30px);
+}
+
+.error-message{
+    color: red;
+    margin-bottom: 15px;
+}
+
+.error-message li{
+    &>ol>ul>li {
+        color: red;
+    list-style-type: disc!important;
+    }
+}
+
+
+

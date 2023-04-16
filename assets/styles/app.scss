@@ -1,0 +1,26 @@
+@import "~materialize-css/sass/materialize";
+@import "~./connexion.scss";
+@import "~./accueil.scss";
+@import "~./navbar.scss";
+@import "~./email.scss";
+@import "~./flash-messages.scss";
+
+$primary : #FEC816;
+$secondary : #164CFE;
+$tertiary : #EDF2F4;
+$quadriary : #2B2D42;
+$orange : #FEA616;
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Oswald', sans-serif;
+    height: max-content;
+    background-color: #f3f4f6;
+}
+
+
+
+
