@@ -18,43 +18,33 @@
             </div>
         </div>
         <div class="div-2">
+            <div class="box-information">
+                <div class="image-information-container">
+                    <img src="{{ asset('build/image/notice.png') }}" alt="image représentant une information" />
+                </div>
+                <div class="information-container">
+                    <div class="information-text-container">
+                        <p>Si l'adresse e-mail saisie se trouve dans notre base de données, un e-mail vous sera envoyé pour réinitialiser votre mot de passe.</p>
+                    </div>
+                </div>
+            </div>
             <div class="container-login">
                 <div class="row">
-                    <form class="col s12" method="post" action="{{ path('app_login') }}">
-                        <h3>Connexion</h3>
-                         {% if error %}
-                             <div>
-                                 <p class="error-message">
-                                     Identifiant et/ou mot de passe incorrect ! 
-                                 </p>
-                             </div>
-                        {% endif %}
+                    <form class="col s12" method="post" action="{{ path('app_reinitialiser-motdepasse-email') }}">
+                        <h3>Réinitialiser votre mot de passe</h3>
                         <div class="row">
                             <div class="input-field col s12 ">
                                 <i class="material-icons prefix">email</i>
                                 <input id="inputUsername" type="email" name="_username" class="validate" required>
                                 <label for="inputUsername">Email</label>
                             </div>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
-                                <input id="inputPassword" type="password" name="_password" class="validate" required>
-                                <label for="inputPassword">Mot de passe</label>
-                            </div>
-
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                            <button class="waves-effect waves-light btn" type="submit">Se Connecter</button>
+                            <button class="waves-effect waves-light btn" type="submit">Réinitialiser</button>
                         </div>
                     </form>
                     <div>
-                        <a href={{path("app_reinitialiser-motdepasse")}} class="register-link"> Mot de passe oublié ?</a>
+                        <a href={{path("app_login")}} class="register-link"> Vous essayez de vous connecter ?</a>
                     </div>
-                </div>
-                <div>
-                    <p>
-                        Vous ne posséder pas de compte ?
-                        <a href={{path("app_inscription")}} class="register-link"> Inscrivez-vous.</a>
-                    </p>
                 </div>
             </div>
         </div>

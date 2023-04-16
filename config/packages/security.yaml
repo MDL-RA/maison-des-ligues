@@ -21,7 +21,6 @@ security:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: app_accueil
-
             logout:
                 path: app_deconnexion
                 # where to redirect after logout

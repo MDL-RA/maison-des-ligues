@@ -5,6 +5,7 @@ namespace App\Security;
 use App\Entity\Compte;
 use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -32,6 +33,20 @@ class EmailVerifier
             ->htmlTemplate('security/confirmation_email.html.twig')
             ->context([
                 'token' => $user->getConfirmationToken(),
+            ]);
+        $mailer->send($email);
+
+    }
+
+    public function sendResetEmail(MailerInterface $mailer, Compte $user, String $token): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address('no-reply@mdl.fr', 'no-reply'))
+            ->to($user->getEmail())
+            ->subject('Demande de réinitialisation de mot de passe')
+            ->htmlTemplate('security/reset_email.html.twig')
+            ->context([
+                'token' => $token,
             ]);
         $mailer->send($email);
 

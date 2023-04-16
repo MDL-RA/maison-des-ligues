@@ -1,0 +1,17 @@
+{% apply inline_css(source('@styles/email-confirmed.css')) %}
+<div class='email-container'>
+    <div class='logo-container'>
+        <img src="{{ email.image('@images/mdl-black.png') }}" alt="Logo de la MDL">
+    </div>
+    <div class='box'>
+        <div class= 'content-container'>
+            <h3>Mot de passe oublié ?</h3>
+            <p>Pour réinitialiser votre mot de passe veuillez cliquer sur le bouton ci-dessous</p>
+            <a href='{{ url('app_reinitialiser-motdepasse-token', {token: token }) }}' class='bouton'>
+                Réinitialiser le mot de passe
+            </a>
+        </div>
+    </div>
+</div>
+{% endapply %}
+
