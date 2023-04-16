@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     let modal = document.getElementById("flash-modal");
     let closeButton = document.querySelector("#close");
-
     if(modal){
         modal.style.opacity = "1";
     }

@@ -1,0 +1,27 @@
+{% set flash_types = {
+    'success': {'class': 'success', 'image': 'build/image/sucess.png', 'alt': 'image représentant une validation'},
+    'warning': {'class': 'warning', 'image': 'build/image/warning.png', 'alt': 'image représentant un warning'},
+    'notice': {'class': 'notice', 'image': 'build/image/notice.png', 'alt': 'image représentant une information'},
+} %}
+
+{% for type, messages in app.flashes %}
+    {% if flash_types[type] is defined %}
+        {% for message in messages %}
+            <div class="flash-background" id="flash-modal">
+                <div class="flash-box">
+                    <div class="flash-image-container">
+                        <img src="{{ asset(flash_types[type].image) }}" alt="{{ flash_types[type].alt }}" />
+                    </div>
+                    <div class="flash-right-container">
+                        <div class="flash-text-container">
+                            <h4>{{ message }}</h4>
+                        </div>
+                        <div class="bouton-container">
+                            <button class="waves-effect waves-light btn" id="close">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}

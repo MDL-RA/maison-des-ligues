@@ -3,26 +3,7 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('success') %}
-        <div class="flash-background" id="flash-modal">
-            <div class="flash-box">
-                <div class="validate-container">
-                    <img src="{{ asset('build/image/validate.png') }}" alt="image représentant une validation" />
-                </div>
-                <div class="flash-right-container">
-                    <div class="flash-text-container">
-                        <h4>{{ message }}</h4>
-                    </div>
-                    <div class="bouton-container">
-                        <button class="waves-effect waves-light btn" id="close">Fermer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    {% include 'modals/flash_message.html.twig' %}
     <div class="wrapper">
         <div class="div-1">
             <div class="polygon-shape">
