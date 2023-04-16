@@ -39,6 +39,9 @@ class SecurityController extends AbstractController
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController, MailerInterface $mailer): Response
     {
+        if($this->getUser()){
+            return $this->redirectToRoute('app_accueil');
+        }
         $user = new Compte();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -73,7 +76,7 @@ class SecurityController extends AbstractController
         // Récupérer l'adresse e-mail de l'utilisateur à partir du token
         $user = $this->compteRepository->findOneBy(['confirmationToken' => $token]);
         if (!$user) {
-            $this->addFlash('warning', 'Le lien que vous avez utilsé n\'est pas valide');
+            $this->addFlash('warning', 'Le lien que vous avez utilisé n\'est pas valide. Veuillez vérifier et utiliser un lien correct.');
         }
         // Valider le lien de confirmation et activer le compte utilisateur
         try {
@@ -81,7 +84,7 @@ class SecurityController extends AbstractController
             $user->setConfirmationToken(null);
             $entityManager->persist($user);
             $entityManager->flush();
-            $this->addFlash('success','Votre compte est activé !');
+            $this->addFlash('success','Votre compte est activé ! Veuillez utiliser l\'adresse e-mail associée à votre compte pour vous connecter.');
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('warning', $exception->getReason());
         }
@@ -99,9 +102,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        //if ($this->getUser()) {
-        //     return $this->redirectToRoute('app_accueil');
-        //}
+        if ($this->getUser()) {
+             return $this->redirectToRoute('app_accueil');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
