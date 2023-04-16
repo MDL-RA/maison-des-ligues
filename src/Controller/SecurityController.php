@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $numLicenceForm = $form->getData()->getNumlicence();
-            if($apiController->getInfoLicencie($numLicenceForm) == null) {
+            if(!$apiController->getInfoLicencie($numLicenceForm)) {
                 $form->get('numLicence')->addError(new FormError('Veuillez changer de numéro de licencié'));
             }else{
                 // encode the plain password
@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->emailVerifier->sendConfirmationEmail($mailer, $user);
-                $this->addFlash('success', 'Pour confirmer votre inscription, veuillez cliquer sur le lien envoyé par e-mail à l\'adresse associée à votre compte.');
+                $this->addFlash('notice', 'Pour confirmer votre inscription, veuillez cliquer sur le lien envoyé par e-mail à l\'adresse associée à votre compte.');
                 return $this->redirectToRoute('app_login');
             }
         }
@@ -72,25 +72,20 @@ class SecurityController extends AbstractController
     {
         // Récupérer l'adresse e-mail de l'utilisateur à partir du token
         $user = $this->compteRepository->findOneBy(['confirmationToken' => $token]);
-
         if (!$user) {
-            return $this->render('security/error_email.html.twig', [
-            ]);
+            $this->addFlash('warning', 'Le lien que vous avez utilsé n\'est pas valide');
         }
-
         // Valider le lien de confirmation et activer le compte utilisateur
         try {
             $user->setIsVerified(true);
             $user->setConfirmationToken(null);
             $entityManager->persist($user);
             $entityManager->flush();
-            return $this->render('security/success_email.html.twig', [
-            ]);
+            $this->addFlash('success','Votre compte est activé !');
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
-
-            return $this->redirectToRoute('app_login');
+            $this->addFlash('warning', $exception->getReason());
         }
+        return $this->redirectToRoute('app_login');
     }
 
 
