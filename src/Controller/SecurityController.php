@@ -42,7 +42,6 @@ class SecurityController extends AbstractController
         $user = new Compte();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $numLicenceForm = $form->getData()->getNumlicence();
             if($apiController->getInfoLicencie($numLicenceForm) == null) {
@@ -59,7 +58,7 @@ class SecurityController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->emailVerifier->sendConfirmationEmail($mailer, $user);
-
+                $this->addFlash('success', 'Pour confirmer votre inscription, veuillez cliquer sur le lien envoyé par e-mail à l\'adresse associée à votre compte.');
                 return $this->redirectToRoute('app_login');
             }
         }

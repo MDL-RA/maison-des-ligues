@@ -13,3 +13,4 @@ import './styles/app.scss';
 import './bootstrap';
 import './scripts/materialize-init';
 import './scripts/register';
+import './scripts/modal';

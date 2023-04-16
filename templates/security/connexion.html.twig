@@ -3,6 +3,23 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="flash-background" id="flash-modal">
+            <div class="flash-box">
+                <div class="validate-container">
+                    <img src="{{ asset('build/image/validate.png') }}" alt="image représentant une validation" />
+                </div>
+                <div class="flash-right-container">
+                    <div class="flash-text-container">
+                        <h4>{{ message }}</h4>
+                    </div>
+                    <div class="bouton-container">
+                        <button class="waves-effect waves-light btn" id="close">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
@@ -11,7 +28,7 @@
             <div class="polygon-shape">
             </div>
             <div class="login-img">
-                <a href="{{ path("app_accueil") }}"><img src="{{ asset('build/image/mdl.png') }}" /></a>
+                <a href="{{ path("app_accueil") }}"><img src="{{ asset('build/image/mdl.png') }}" alt="image représentant une validation"/></a>
                 <div class="text-container">
                     <p>
                         Application de gestion des inscriptions aux congrés
@@ -45,7 +62,7 @@
 
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                            <button class="waves-effect waves-light btn" type="sumbit">Se Connecter</button>
+                            <button class="waves-effect waves-light btn" type="submit">Se Connecter</button>
                         </div>
                     </form>
                 </div>
