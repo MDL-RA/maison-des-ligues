@@ -38,8 +38,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\Column(type: 'string',length: 255,nullable: true)]
-    private ?string $confirmationToken;
 
     public function getId(): ?int {
         return $this->id;
@@ -149,17 +147,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     {
         $this->isVerified = $isVerified;
 
-        return $this;
-    }
-
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
-
-    public function setConfirmationToken(?string $confirmationToken): self
-    {
-        $this->confirmationToken = $confirmationToken;
         return $this;
     }
 

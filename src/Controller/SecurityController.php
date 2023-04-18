@@ -17,7 +17,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Security\EmailVerifier;
@@ -30,21 +29,22 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Service\APIService;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 
 class SecurityController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
     private CompteRepository $compteRepository;
-    private TokenStorageInterface  $tokenStorage;
     private SessionInterface $session;
+    private VerifyEmailHelperInterface $verifyEmailHelper;
 
-    public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository,TokenStorageInterface $tokenStorage, SessionInterface $session)
+    public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository, SessionInterface $session,VerifyEmailHelperInterface $verifyEmailHelper)
     {
         $this->emailVerifier = $emailVerifier;
         $this->compteRepository= $compteRepository;
         $this->session= $session;
-        $this->tokenStorage = $tokenStorage;
+        $this->verifyEmailHelper = $verifyEmailHelper;
     }
 
     #[Route('/inscription', name: 'app_inscription')]
@@ -68,7 +68,6 @@ class SecurityController extends AbstractController
                         $form->get('plainPassword')->getData()
                     ));
                 $user->setEmail(($apiService->getLicencieById($numLicenceForm))[0]['mail']);
-                $user->setConfirmationToken(md5(uniqid()));
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->emailVerifier->sendConfirmationEmail($mailer, $user);
@@ -81,32 +80,27 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email/{token}', name: 'app_verify_email')]
-    public function verifyUserEmail(String $token, EntityManagerInterface $entityManager): Response
+    #[Route('/verify/email/', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Récupérer l'adresse e-mail de l'utilisateur à partir du token
-        $user = $this->compteRepository->findOneBy(['confirmationToken' => $token]);
+        $userId = $request->query->get('id');
+        $user = $this->compteRepository->find($userId);
         if (!$user) {
-            $this->addFlash('warning', 'Le lien que vous avez utilisé n\'est pas valide. Veuillez vérifier et utiliser un lien correct.');
+            // Ajoutez un message d'erreur, par exemple dans un flashBag
+            $this->addFlash('warning','Une erreur est survenu');
+            return $this->redirectToRoute('app_login');
         }
-        // Valider le lien de confirmation et activer le compte utilisateur
-        try {
-            $user->setIsVerified(true);
-            $user->setConfirmationToken(null);
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->addFlash('success','Votre compte est activé ! Veuillez utiliser l\'adresse e-mail associée à votre compte pour vous connecter.');
+        try{
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('warning', $exception->getReason());
+            $this->addFlash('warning','Une erreur est survenu');
+            return $this->redirectToRoute('app_login');
         }
+        $user->setIsVerified(true);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $this->addFlash('success','Votre adresse e-mail a été vérifiée avec succès.');
         return $this->redirectToRoute('app_login');
-    }
-
-    #[Route('/reinitialiser-motdepasse', name: 'app_reinitialiser-motdepasse')]
-    public function reinitialiserMotDePasse(): Response
-    {
-        return $this->render('security/reinitialiser-email.html.twig', [
-        ]);
     }
 
     #[Route(path: '/deconnexion', name: 'app_deconnexion')]
