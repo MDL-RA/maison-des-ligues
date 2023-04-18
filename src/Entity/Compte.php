@@ -38,25 +38,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isPasswordReset = false;
-
-    /**
-     * @return bool
-     */
-    public function getIsPasswordReset(): bool
-    {
-        return $this->isPasswordReset;
-    }
-
-    /**
-     * @param bool $isPasswordReset
-     */
-    public function setIsPasswordReset(bool $isPasswordReset): void
-    {
-        $this->isPasswordReset = $isPasswordReset;
-    }
-
     #[ORM\Column(type: 'string',length: 255,nullable: true)]
     private ?string $confirmationToken;
 

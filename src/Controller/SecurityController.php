@@ -109,58 +109,6 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/reinitialiser-motdepasse-email', name: 'app_reinitialiser-motdepasse-email')]
-    public function reinitialiserMotDePasseEnvoiMail(Request $request, EntityManagerInterface $entityManager,  MailerInterface $mailer,JWTTokenManagerInterface $jwtManager): Response
-    {
-        $email = $request->request->get('_username');
-        $user = $this->compteRepository->findOneBy(['email'=> $email]);
-        if($user){
-            $token = $jwtManager->create($user);
-            $user->setIsPasswordReset(true);
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $this->emailVerifier->sendResetEmail($mailer, $user, $token);
-        }
-        return $this->redirectToRoute('app_login');
-    }
-
-    #[Route('/reinitialiser-motdepasse/{token}', name: 'app_reinitialiser-motdepasse-token')]
-    public function reinitialiserMotDePasseToken(string $token, JWTTokenManagerInterface $jwtManager, UserPasswordHasherInterface $passwordEncoder): Response
-    {
-        try {
-            $decodedToken = $jwtManager->parse($token);
-        } catch (ExpiredTokenException $e) {
-            // Token expiré
-            $this->addFlash('warning', "Le lien de réinitialisation du mot de passe est invalide ou a expiré.");
-            dd('token-expiré');
-            return $this->redirectToRoute('app_reinitialiser-motdepasse');
-//        } catch (JWTDecodeFailureException $e) {
-//            $this->addFlash('warning', "Le lien de réinitialisation du mot de passe est invalide ou a expiré.");
-//            dd('decodage échoué');
-//            return $this->redirectToRoute('app_reinitialiser-motdepasse');
-        }
-
-        $userEmail = $decodedToken['username'];
-
-        // Récupérer l'utilisateur
-        $user = $this->compteRepository->findOneBy(['email'=> $userEmail]);
-
-        if (!$user) {
-            $this->addFlash('error', "Le lien de réinitialisation du mot de passe est invalide ou a expiré.");
-            dd('utilisateur pas trouvé');
-            return $this->redirectToRoute('app_reinitialiser-motdepasse');
-        }
-
-        // Connecter l'utilisateur
-        $newToken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-        $this->tokenStorage->setToken($newToken);
-        $this->session->set('_security_main', serialize($token));
-
-        // Rediriger l'utilisateur vers la page de réinitialisation du mot de passe
-        return $this->redirectToRoute('app_reset_password');
-    }
-
-
     #[Route(path: '/deconnexion', name: 'app_deconnexion')]
     public function deconnexion(): void
     {

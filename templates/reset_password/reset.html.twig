@@ -1,0 +1,61 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Reset your password{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>Reset your password</h1>#}
+
+{#    {{ form_start(resetForm) }}#}
+{#        {{ form_row(resetForm.plainPassword) }}#}
+{#        <button class="btn btn-primary">Reset password</button>#}
+{#    {{ form_end(resetForm) }}#}
+{#{% endblock %}#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser votre mot de passe{% endblock %}
+{% set errors = form_errors(resetForm) %}
+{% block body %}
+    <div class='email-container'>
+        <div class="box-information">
+                <div class="image-information-container">
+                    <img src="{{ asset('build/image/notice.png') }}" alt="image représentant une information" />
+                </div>
+                <div class="information-container">
+                    <div class="information-text-container">
+                        <p>Votre mot de passe doit contenir au moins:
+                        <li>
+                            8 caractères dont un chiffre
+                        </li>
+                        <li>
+                            un caractère en minuscule
+                        </li>
+                        <li>
+                            un caractère en majuscule
+                        </li>
+                        <li>
+                            un caractère spécial
+                        </li>
+                        </p>
+                    </div>
+                </div>
+        </div>
+        <div class='box'>
+            <div class= 'content-container'>
+                {{ form_start(resetForm)}}
+                <h3>Réinitialiser votre mot de passe</h3>
+                <div class="error-text-container">
+                    {{ form_errors(resetForm.plainPassword) }}
+                </div>
+                <div class="input-field col s12">
+                    {{ form_row(resetForm.plainPassword, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+
+                <button class='waves-effect waves-light btn' type="submit">
+                    Réinitialiser le mot de passe
+                </button>
+                {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

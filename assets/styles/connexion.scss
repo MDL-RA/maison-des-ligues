@@ -207,6 +207,10 @@
     border-radius: 20px;
     & > p {
         font-size: 15px;
+        text-align: justify;
+    }
+    & > li {
+        float: left;
     }
 }
 
