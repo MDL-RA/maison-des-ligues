@@ -1,0 +1,5 @@
+lexik_jwt_authentication:
+    secret_key: '%kernel.project_dir%/config/keys/jwt/private.pem'
+    public_key: '%kernel.project_dir%/config/keys/jwt/public.pem'
+    pass_phrase: 'Geronimo'
+    token_ttl: 15

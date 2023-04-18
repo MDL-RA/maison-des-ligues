@@ -4,12 +4,21 @@ namespace App\Controller;
 
 use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManager;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Security\EmailVerifier;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,14 +36,16 @@ class SecurityController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
     private CompteRepository $compteRepository;
+    private TokenStorageInterface  $tokenStorage;
+    private SessionInterface $session;
 
-    public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository)
+    public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository,TokenStorageInterface $tokenStorage, SessionInterface $session)
     {
         $this->emailVerifier = $emailVerifier;
         $this->compteRepository= $compteRepository;
+        $this->session= $session;
+        $this->tokenStorage = $tokenStorage;
     }
-
-
 
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController, MailerInterface $mailer): Response
@@ -91,7 +102,12 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
-
+    #[Route('/reinitialiser-motdepasse', name: 'app_reinitialiser-motdepasse')]
+    public function reinitialiserMotDePasse(): Response
+    {
+        return $this->render('security/reinitialiser-email.html.twig', [
+        ]);
+    }
 
     #[Route(path: '/deconnexion', name: 'app_deconnexion')]
     public function deconnexion(): void
@@ -113,4 +129,6 @@ class SecurityController extends AbstractController
 
         return $this->render('security/connexion.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+
+
 }
