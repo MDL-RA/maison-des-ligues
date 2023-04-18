@@ -10,7 +10,7 @@
             </div>
             <h3>Confirmer votre inscription !</h3>
             <p>Pour valider votre compte veuillez cliquer sur le bouton ci-dessous</p>
-            <a href='{{ url('app_verify_email', {token: token }) }}' class='bouton'>
+            <a href='{{ (signedUrl) }}' class='bouton'>
                 Cliquez ici pour valider votre compte
             </a>
         </div>

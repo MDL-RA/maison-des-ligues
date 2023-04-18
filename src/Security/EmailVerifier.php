@@ -26,16 +26,24 @@ class EmailVerifier
 
     public function sendConfirmationEmail(MailerInterface $mailer, Compte $user): void
     {
+        $signatureComponents = $this->verifyEmailHelper->generateSignature(
+            'app_verify_email',
+            $user->getId(),
+            $user->getEmail(),
+            ['id' => $user->getId()]
+        );
+
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@mdl.fr', 'no-reply'))
             ->to($user->getEmail())
             ->subject('Confirmation de votre compte')
             ->htmlTemplate('security/confirmation_email.html.twig')
             ->context([
-                'token' => $user->getConfirmationToken(),
+                'signedUrl' => $signatureComponents->getSignedUrl(),
+                'expiresAtMessageKey' => $signatureComponents->getExpirationMessageKey(),
+                'expiresAtMessageData' => $signatureComponents->getExpirationMessageData(),
             ]);
         $mailer->send($email);
-
     }
 
     public function sendResetEmail(MailerInterface $mailer, Compte $user, String $token): void
@@ -49,7 +57,6 @@ class EmailVerifier
                 'token' => $token,
             ]);
         $mailer->send($email);
-
     }
 
 }
