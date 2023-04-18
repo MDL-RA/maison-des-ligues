@@ -16,7 +16,6 @@ class AccueilController extends AbstractController {
 
     #[Route('/accueil', name: 'app_accueil')]
     public function accueil(): Response {
-        $this->denyAccessUnlessGranted(PasswordResetVoter::PASSWORD_RESET, null, "Vous devez réinitialiser votre mot de passe avant d'accéder à cette fonctionnalité.");
 
         return $this->render('accueil/accueil.html.twig');
     }
