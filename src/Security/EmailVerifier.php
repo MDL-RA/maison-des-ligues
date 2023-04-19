@@ -21,8 +21,9 @@ class EmailVerifier
 {
     public function __construct(
         private VerifyEmailHelperInterface $verifyEmailHelper,
-        private MailerInterface $mailer,
-    ) {
+        private MailerInterface            $mailer,
+    )
+    {
     }
 
     public function sendConfirmationEmail(Compte $user): void
@@ -44,7 +45,7 @@ class EmailVerifier
                 'expiresAtMessageKey' => $signatureComponents->getExpirationMessageKey(),
                 'expiresAtMessageData' => $signatureComponents->getExpirationMessageData(),
             ]);
-            $this->mailer->send($email);
+        $this->mailer->send($email);
     }
 
     public function sendResetEmail(Compte $user, ResetPasswordToken $resetToken): void
@@ -57,6 +58,16 @@ class EmailVerifier
             ->context([
                 'resetToken' => $resetToken,
             ]);
-            $this->mailer->send($email);
+        $this->mailer->send($email);
+    }
 
-}}
+    public function sendConfirmationReset(Compte $user): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address('no-reply@mdl.fr', 'no-reply'))
+            ->to($user->getEmail())
+            ->subject('Confirmation de la réinitialisation de votre mot de passe')
+            ->htmlTemplate('reset_password/confirmation_reset.html.twig');
+        $this->mailer->send($email);
+    }
+}

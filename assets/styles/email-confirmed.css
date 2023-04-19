@@ -62,7 +62,7 @@
 }
 
 .content-container p {
-    font-size: 20px;
+    font-size: 18px;
     color: #8b8b8b;
     width: 400px;
 }
@@ -80,4 +80,14 @@
     cursor: pointer;
     width: 400px;
     font-size: 20px;
+}
+
+.flash-image-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+.flash-image-container > img {
+    width: 200px;
+    height: 200px;
 }
