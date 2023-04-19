@@ -30,45 +30,51 @@ class APIService {
         return json_decode($decryptedData, true);
     }
 
-    public function getClub(): array {
-        try {
+    public function getClub(): ?array {
             $response = $this->httpClient->request(
                     'GET',
-                    'http://api/api/clubs/'
-                    
+//                    'http://api/api/clubs/'
+                'http://php-symfony-api:80/api/clubs/',
+
             );
 
-            return $response->toArray();
-        } catch (Exception $ex) {
-            
+        if($response->getStatusCode() === 200)
+        {
+            return $this->decryptData($response->toArray());
+        }else {
+            return null;
         }
     }
 
-    public function getLicencie(): array {
-        try {
+    public function getLicencie(): ?array {
             $response = $this->httpClient->request(
                     'GET',
 //                    'http://api/api/licencies/'
                 'http://php-symfony-api:80/api/licencies/',
             );
-
-            return $this->decryptData($response->toArray());;
-        } catch (Exception $ex) {
-            
+        if($response->getStatusCode() === 200)
+        {
+            return $this->decryptData($response->toArray());
+        }else {
+            return null;
         }
+
     }
 
-    public function getQualite(): array {
-        try {
+    public function getQualite(): ?array {
+
             $response = $this->httpClient->request(
                     'GET',
-                    'http://api/api/qualites?page=1',
-            );
+//                    'http://api/api/qualites',
+                'http://php-symfony-api:80/api/qualites/',
 
-            return $response->toArray();
-        } catch (Exception $ex) {
-            
-        }
+            );
+            if($response->getStatusCode() === 200)
+            {
+                return $this->decryptData($response->toArray());
+            }else {
+                return null;
+            }
     }
 
     public function getLicencieById(int $id): ?array
@@ -85,6 +91,5 @@ class APIService {
                 return null;
             }
     }
-
 
 }
