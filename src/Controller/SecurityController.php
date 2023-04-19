@@ -34,21 +34,12 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class SecurityController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-    private CompteRepository $compteRepository;
-    private SessionInterface $session;
-    private VerifyEmailHelperInterface $verifyEmailHelper;
+    public function __construct( private EmailVerifier $emailVerifier,){
 
-    public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository, SessionInterface $session,VerifyEmailHelperInterface $verifyEmailHelper)
-    {
-        $this->emailVerifier = $emailVerifier;
-        $this->compteRepository= $compteRepository;
-        $this->session= $session;
-        $this->verifyEmailHelper = $verifyEmailHelper;
     }
 
     #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController, MailerInterface $mailer): Response
+    public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController): Response
     {
         if($this->getUser()){
             return $this->redirectToRoute('app_accueil');
@@ -70,7 +61,7 @@ class SecurityController extends AbstractController
                 $user->setEmail(($apiService->getLicencieById($numLicenceForm))[0]['mail']);
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->emailVerifier->sendConfirmationEmail($mailer, $user);
+                $this->emailVerifier->sendConfirmationEmail($user);
                 $this->addFlash('notice', 'Pour confirmer votre inscription, veuillez cliquer sur le lien envoyé par e-mail à l\'adresse associée à votre compte.');
                 return $this->redirectToRoute('app_login');
             }
@@ -80,28 +71,6 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email/', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $userId = $request->query->get('id');
-        $user = $this->compteRepository->find($userId);
-        if (!$user) {
-            // Ajoutez un message d'erreur, par exemple dans un flashBag
-            $this->addFlash('warning','Une erreur est survenu');
-            return $this->redirectToRoute('app_login');
-        }
-        try{
-            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('warning','Une erreur est survenu');
-            return $this->redirectToRoute('app_login');
-        }
-        $user->setIsVerified(true);
-        $entityManager->persist($user);
-        $entityManager->flush();
-        $this->addFlash('success','Votre adresse e-mail a été vérifiée avec succès.');
-        return $this->redirectToRoute('app_login');
-    }
 
     #[Route(path: '/deconnexion', name: 'app_deconnexion')]
     public function deconnexion(): void

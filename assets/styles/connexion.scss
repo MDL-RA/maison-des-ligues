@@ -197,8 +197,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 50%;
 }
+
+
 .information-text-container{
     padding : 20px;
     background-color:#edf2f4;
@@ -212,5 +213,10 @@
     & > li {
         float: left;
     }
+    margin-bottom: 5px;
+}
+
+.reset-password-container{
+    margin: 20px;
 }
 

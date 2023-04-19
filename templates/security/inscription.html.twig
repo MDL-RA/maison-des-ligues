@@ -22,9 +22,10 @@
                 <div class="row">
                     {{ form_start(registrationForm,{'attr': {'class': 'col s12'}}) }}
                     <h3>Inscription</h3>
+                    {% include 'reset_password/password-info.html.twig' %}
                     <div class="error-message">
+                        {{ form_errors(registrationForm.plainPassword.first) }}
                         {{ form_errors(registrationForm.numLicence) }}
-                        {{ form_errors(registrationForm.plainPassword) }}
                     </div>
                     <div class="row">
                         <div class="input-field col s12 ">
@@ -34,8 +35,13 @@
                         </div>
                         <div class="input-field col s12">
                             <i class="material-icons prefix">lock</i>
-                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+                            {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
                             <label for="password">Mot de passe</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock</i>
+                            {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+                            <label for="password">Confirmer votre mot de passe</label>
                         </div>
                         <button class="waves-effect waves-light btn" type="submit">S'inscrire</button>
                     </div>

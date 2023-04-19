@@ -18,14 +18,11 @@ class ChangePasswordFormType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                        'autocomplete' => 'nouveau-motdepasse',
-                        'class'=> 'validate m',
-                        'required' => 'true',
-                    ],
-                ],
-                'first_options' => [
+                'mapped' => false,
+                'invalid_message' => 'les mots de passe saisis ne sont pas identiques.',
+                'required' => true,
+                'attr' => ['autocomplete' => 'new-password'],
+                'first_options'=>[
                     'constraints' => [
                         new NotBlank([
                             'message' => 'Veuillez renseigner un mot de passe',
@@ -39,17 +36,9 @@ class ChangePasswordFormType extends AbstractType
                         new Regex([
                             'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/',
                             'message' => 'Votre mot de passe ne respecte pas au moins l\'une des conditions requises',
-                        ])
+                        ]),
                     ],
-                    'label' => 'Nouveau mot de passe',
                 ],
-                'second_options' => [
-                    'label' => 'Confirmez votre nouveau mot de passe',
-                ],
-                'invalid_message' => 'les mots de passe saisis ne sont pas identiques.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
             ])
         ;
     }

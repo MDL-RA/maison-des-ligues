@@ -18,20 +18,15 @@
             </div>
         </div>
         <div class="div-2">
-            <div class="box-information">
-                <div class="image-information-container">
-                    <img src="{{ asset('build/image/notice.png') }}" alt="image représentant une information" />
-                </div>
-                <div class="information-container">
-                    <div class="information-text-container">
-                        <p>Si l'adresse e-mail saisie se trouve dans notre base de données, un e-mail vous sera envoyé pour réinitialiser votre mot de passe.</p>
-                    </div>
-                </div>
-            </div>
             <div class="container-login">
                 <div class="row">
                     {{ form_start(requestForm,{'attr': {'class': 'col s12'}}) }}
                         <h3>Réinitialiser votre mot de passe</h3>
+                        <div class="information-container">
+                            <div class="information-text-container">
+                                <p>Si l'adresse e-mail saisie se trouve dans notre base de données, un e-mail vous sera envoyé pour réinitialiser votre mot de passe.</p>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="input-field col s12 ">
                                 <i class="material-icons prefix">email</i>

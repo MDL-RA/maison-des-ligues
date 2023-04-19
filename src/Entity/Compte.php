@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CompteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -38,11 +39,9 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-
     public function getId(): ?int {
         return $this->id;
     }
-
 
     /**
      * A visual identifier that represents this user.
