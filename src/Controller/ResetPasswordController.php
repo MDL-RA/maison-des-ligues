@@ -7,6 +7,7 @@ use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Repository\ResetPasswordRequestRepository;
 use App\Security\EmailVerifier;
+use App\Service\APIService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,14 +41,15 @@ class ResetPasswordController extends AbstractController
      * @return Response
      */
     #[Route('', name: 'app_forgot_password_request')]
-    public function request(Request $request): Response
+    public function request(Request $request, APIService $apiService): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $numLicencie = $form->get('numLicence')->getData();
             return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
+                $apiService->getLicencieById($numLicencie)[0]['mail'],
             );
         }
 

@@ -24,9 +24,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'bigint', unique: true)]
     private ?int $numlicence = null;
 
-    
-    #[ORM\Column(unique: true)]
-    private ?string $email = null;
     /**
      * @var string The hashed password
      */
@@ -96,16 +93,6 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
 
     public function setPassword(string $password): self {
         $this->password = $password;
-
-        return $this;
-    }
-
-     public function getEmail(): string {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self {
-        $this->email = $email;
 
         return $this;
     }

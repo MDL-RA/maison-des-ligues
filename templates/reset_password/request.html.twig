@@ -24,14 +24,14 @@
                         <h3>Réinitialiser votre mot de passe</h3>
                         <div class="information-container">
                             <div class="information-text-container">
-                                <p>Si l'adresse e-mail saisie se trouve dans notre base de données, un e-mail vous sera envoyé pour réinitialiser votre mot de passe.</p>
+                                <p>Si votre numéro licencié saisie se trouve dans notre base de données, un e-mail vous sera envoyé pour réinitialiser votre mot de passe.</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12 ">
-                                <i class="material-icons prefix">email</i>
-                                {{ form_widget(requestForm.email, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
-                                <label for="inputUsername">Email</label>
+                                <i class="material-icons prefix">perm_identity</i>
+                                {{ form_widget(requestForm.numLicence, {'attr': {'class': 'validate', 'required' : 'true'}}) }}
+                                <label for="inputUsername">Numéro Licencié</label>
                             </div>
                             <button class="waves-effect waves-light btn" type="submit">Réinitialiser</button>
                         </div>
