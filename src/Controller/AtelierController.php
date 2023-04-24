@@ -12,7 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AtelierController extends AbstractController{
-    
+
+
+    /**
+     * Méthode permettant d'accéder à la page des ateliers
+     * @return Response
+     */
     #[Route('/ateliers', name: 'app_ateliers')]
     public function ateliers(): Response {
         return $this->render('ateliers/ateliers.html.twig');

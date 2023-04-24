@@ -11,6 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class APIController extends AbstractController {
     public function __construct(private readonly APIService $apiService, private readonly CompteRepository $compteRepository) {}
 
+    /**
+     * Méthode permettant de vérifier si un licencié existe dans la base de donnée de l'api et de l'application
+     * @param int $numlicence
+     * @return bool
+     */
     #[Route('/get/api/licencie/{numlicence}', name: 'app_infos_licencie', methods: ['GET'])]
     public function getInfoLicencie(int $numlicence): bool
     {

@@ -13,6 +13,11 @@ class APIService {
         ]);
     }
 
+    /**
+     * Méthode permettant de déchiffrer les données de l'API
+     * @param $data
+     * @return array
+     */
     public function decryptData($data) : array
     {
         $path= 'file://'.$this->container->getParameter('kernel.project_dir').'/config/keys/private.pem';
@@ -30,6 +35,10 @@ class APIService {
         return json_decode($decryptedData, true);
     }
 
+    /**
+     * Méthode permettant de récuperer la liste des clubs
+     * @return array|null
+     */
     public function getClub(): ?array {
             $response = $this->httpClient->request(
                     'GET',
@@ -46,6 +55,10 @@ class APIService {
         }
     }
 
+    /**
+     * Méthode permettant de récupérer lo liste des licencies
+     * @return array|null
+     */
     public function getLicencie(): ?array {
             $response = $this->httpClient->request(
                     'GET',
@@ -61,6 +74,10 @@ class APIService {
 
     }
 
+    /**
+     * Méthode permettant de récupérer la liste des Qualites
+     * @return array|null
+     */
     public function getQualite(): ?array {
 
             $response = $this->httpClient->request(
@@ -77,6 +94,11 @@ class APIService {
             }
     }
 
+    /**
+     * Méthode permettant de récuperer les informations d'un licencié par son numéro de licencié
+     * @param int $id
+     * @return array|null
+     */
     public function getLicencieById(int $id): ?array
     {
             $response = $this->httpClient->request(

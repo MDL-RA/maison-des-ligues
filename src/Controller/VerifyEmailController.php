@@ -42,6 +42,12 @@ class VerifyEmailController extends AbstractController
     $this->verifyEmailHelper = $verifyEmailHelper;
 }
 
+    /**
+     * Méthode permettant d'activer le compte d'un licencié
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/activer/compte/', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, EntityManagerInterface $entityManager): Response
     {

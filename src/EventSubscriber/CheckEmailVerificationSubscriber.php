@@ -25,6 +25,10 @@ class CheckEmailVerificationSubscriber implements EventSubscriberInterface
         $this->session = $session;
     }
 
+    /**
+     * Méthode qui dit à l'eventSusbcriber d'écouter l'evenement 'onLoginSucces'
+     * @return string[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -32,6 +36,11 @@ class CheckEmailVerificationSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Méthode qui va vérifier si utilisateur à vérifier son compte pour qu'il puisse accéder à l'application
+     * @param LoginSuccessEvent $event
+     * @return void
+     */
     public function onLoginSuccess(LoginSuccessEvent $event): void
     {
         $user = $event->getUser();
