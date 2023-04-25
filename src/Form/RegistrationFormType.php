@@ -15,6 +15,12 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType {
 
+    /**
+     * Formulaire de la création de compte
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
                 ->add('numLicence', NumberType::class, [

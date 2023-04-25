@@ -38,6 +38,15 @@ class SecurityController extends AbstractController
 
     }
 
+    /**
+     * Méthode permettant d'inscrire un licencié à l'application
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param EntityManagerInterface $entityManager
+     * @param APIService $apiService
+     * @param APIController $apiController
+     * @return Response
+     */
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController): Response
     {
@@ -72,12 +81,21 @@ class SecurityController extends AbstractController
     }
 
 
+    /**
+     * Méthode permettant de se déconnecter de l'application
+     * @return void
+     */
     #[Route(path: '/deconnexion', name: 'app_deconnexion')]
     public function deconnexion(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
+    /**
+     * Méthode permettant de se connecter à l'application
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

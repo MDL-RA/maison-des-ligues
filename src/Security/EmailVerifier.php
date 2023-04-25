@@ -26,6 +26,12 @@ class EmailVerifier
     {
     }
 
+    /**
+     * Méthode permettant de créer le mail de confirmation de création de compte
+     * @param Compte $user
+     * @return void
+     * @throws TransportExceptionInterface
+     */
     public function sendConfirmationEmail(Compte $user): void
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
@@ -48,6 +54,13 @@ class EmailVerifier
         $this->mailer->send($email);
     }
 
+    /**
+     * Méthode permettant de créer le mail de réinitialisation de mot de passe
+     * @param Compte $user
+     * @param ResetPasswordToken $resetToken
+     * @return void
+     * @throws TransportExceptionInterface
+     */
     public function sendResetEmail(Compte $user, ResetPasswordToken $resetToken): void
     {
         $email = (new TemplatedEmail())
@@ -61,6 +74,12 @@ class EmailVerifier
         $this->mailer->send($email);
     }
 
+    /**
+     * Méthode d'envoyer la confirmation de la réinitialisation de mot de passe
+     * @param Compte $user
+     * @return void
+     * @throws TransportExceptionInterface
+     */
     public function sendConfirmationReset(Compte $user): void
     {
         $email = (new TemplatedEmail())
