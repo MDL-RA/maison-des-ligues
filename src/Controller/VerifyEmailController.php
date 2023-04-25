@@ -29,17 +29,11 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class VerifyEmailController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-    private CompteRepository $compteRepository;
-    private SessionInterface $session;
-    private VerifyEmailHelperInterface $verifyEmailHelper;
-
-  public function __construct(EmailVerifier $emailVerifier, CompteRepository $compteRepository, SessionInterface $session,VerifyEmailHelperInterface $verifyEmailHelper)
+  public function __construct(private EmailVerifier $emailVerifier,private  CompteRepository $compteRepository,
+                              private SessionInterface $session,
+                              private VerifyEmailHelperInterface $verifyEmailHelper,
+                              private APIService                 $apiService,)
 {
-    $this->emailVerifier = $emailVerifier;
-    $this->compteRepository= $compteRepository;
-    $this->session= $session;
-    $this->verifyEmailHelper = $verifyEmailHelper;
 }
 
     /**
@@ -63,7 +57,7 @@ class VerifyEmailController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         try{
-            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $this->apiService->getLicencieById($user->getNumlicence())[0]['mail']);
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('warning','Une erreur est survenu');
             return $this->redirectToRoute('app_login');

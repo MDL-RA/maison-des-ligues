@@ -46,14 +46,14 @@ class Compte implements UserInterface, PasswordAuthenticatedUserInterface {
      * @see UserInterface
      */
     public function getUserIdentifier(): string {
-        return (string) $this->email;
+        return (string) $this->numlicence;
     }
 
     /**
      * @deprecated since Symfony 5.3, use getUserIdentifier instead
      */
     public function getUsername(): string {
-        return (string) $this->email;
+        return (string) $this->numlicence;
     }
 
     /**

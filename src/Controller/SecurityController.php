@@ -67,7 +67,6 @@ class SecurityController extends AbstractController
                         $user,
                         $form->get('plainPassword')->getData()
                     ));
-                $user->setEmail(($apiService->getLicencieById($numLicenceForm))[0]['mail']);
                 $entityManager->persist($user);
                 $entityManager->flush();
                 $this->emailVerifier->sendConfirmationEmail($user);

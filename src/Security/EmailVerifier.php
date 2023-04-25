@@ -4,6 +4,7 @@ namespace App\Security;
 
 use App\Entity\Compte;
 use App\Repository\CompteRepository;
+use App\Service\APIService;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -22,6 +23,7 @@ class EmailVerifier
     public function __construct(
         private VerifyEmailHelperInterface $verifyEmailHelper,
         private MailerInterface            $mailer,
+        private APIService                 $apiService,
     )
     {
     }
@@ -37,13 +39,13 @@ class EmailVerifier
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             'app_verify_email',
             $user->getId(),
-            $user->getEmail(),
+            $this->apiService->getLicencieById($user->getNumlicence())[0]['mail'],
             ['id' => $user->getId()]
         );
 
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@mdl.fr', 'no-reply'))
-            ->to($user->getEmail())
+            ->to($this->apiService->getLicencieById($user->getNumlicence())[0]['mail'])
             ->subject('Confirmation de votre compte')
             ->htmlTemplate('security/confirmation_email.html.twig')
             ->context([
@@ -63,9 +65,10 @@ class EmailVerifier
      */
     public function sendResetEmail(Compte $user, ResetPasswordToken $resetToken): void
     {
+        $userBDD = $this->apiService->getLicencieById($user->getNumlicence());
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@mdl.fr', 'no-reply'))
-            ->to($user->getEmail())
+            ->to($this->apiService->getLicencieById($user->getNumlicence())[0]['mail'])
             ->subject('Demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
@@ -84,7 +87,7 @@ class EmailVerifier
     {
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@mdl.fr', 'no-reply'))
-            ->to($user->getEmail())
+            ->to($this->apiService->getLicencieById($user->getNumlicence())[0]['mail'])
             ->subject('Confirmation de la réinitialisation de votre mot de passe')
             ->htmlTemplate('reset_password/confirmation_reset.html.twig');
         $this->mailer->send($email);

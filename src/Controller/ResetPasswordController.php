@@ -49,7 +49,7 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $numLicencie = $form->get('numLicence')->getData();
             return $this->processSendingPasswordResetEmail(
-                $apiService->getLicencieById($numLicencie)[0]['mail'],
+                $apiService->getLicencieById($numLicencie),
             );
         }
 
@@ -113,13 +113,13 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Méthode permettant d'effectuer l'envoie d'email concernant la réinitialisation du mot de passe
-     * @param string $emailFormData
+     * @param array $emailFormData
      * @return RedirectResponse
      */
-    private function processSendingPasswordResetEmail(string $emailFormData): RedirectResponse
+    private function processSendingPasswordResetEmail(array $emailFormData): RedirectResponse
     {
         $user = $this->entityManager->getRepository(Compte::class)->findOneBy([
-            'email' => $emailFormData,
+            'numlicence' => $emailFormData[0]['numlicence'],
         ]);
 
         // Do not reveal whether a user account was found or not.
