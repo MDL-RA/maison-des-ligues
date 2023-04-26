@@ -53,8 +53,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top: 2px solid ;
-    border-color: #FEC816;
+    height: 250px;
+    flex-direction: column;
 }
 
 .card-content-hotel{
@@ -63,8 +63,6 @@
     justify-content: center;
     flex-direction: column;
     color: black;
-    border-top: 2px solid;
-    border-color: #FEC816;
     margin-bottom: 20px;
 }
 

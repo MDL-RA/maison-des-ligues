@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class AtelierService {
     public function __construct(private readonly ContainerInterface $container, private readonly AtelierRepository $atelierRepository) {}
 
-    public function getAllAteliers() : ?Atelier {
+    public function getAllAteliers() : ?array {
         return $this->atelierRepository->findAll();
     }
 }

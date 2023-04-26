@@ -7,6 +7,7 @@ use App\Service\AtelierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\HotelRepository;
 
 #[Route('/participer')]
 class ParticiperInscriptionController extends AbstractController
@@ -21,9 +22,13 @@ class ParticiperInscriptionController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_participer_inscription')]
-    public function participerInscription(AtelierService $atelierService) : Response
+    public function participerInscription(AtelierService $atelierService,HotelRepository $hotelRepo) : Response
     {
-        $ateliers=$atelierService->getAllAteliers();
-        return $this->render('participer_inscription/inscription.html.twig');
+        $ateliers = $atelierService->getAllAteliers();
+        $hotels = $hotelRepo->findAll();
+        return $this->render('participer_inscription/inscription.html.twig',[
+            'ateliers' => $ateliers,
+            'hotels' => $hotels,
+        ]);
     }
 }

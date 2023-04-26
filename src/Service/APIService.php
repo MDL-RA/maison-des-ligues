@@ -42,8 +42,8 @@ class APIService {
     public function getClub(): ?array {
             $response = $this->httpClient->request(
                     'GET',
-//                    'http://api/api/clubs/'
-                'http://php-symfony-api:80/api/clubs/',
+                    'http://api/api/clubs/'
+//                'http://php-symfony-api:80/api/clubs/',
 
             );
 
@@ -62,8 +62,8 @@ class APIService {
     public function getLicencie(): ?array {
             $response = $this->httpClient->request(
                     'GET',
-//                    'http://api/api/licencies/'
-                'http://php-symfony-api:80/api/licencies/',
+                   'http://api/api/licencies/'
+ //                'http://php-symfony-api:80/api/licencies/',
             );
         if($response->getStatusCode() === 200)
         {
@@ -82,8 +82,8 @@ class APIService {
 
             $response = $this->httpClient->request(
                     'GET',
-//                    'http://api/api/qualites',
-                'http://php-symfony-api:80/api/qualites/',
+                  'http://api/api/qualites',
+//                'http://php-symfony-api:80/api/qualites/',
 
             );
             if($response->getStatusCode() === 200)
@@ -103,8 +103,8 @@ class APIService {
     {
             $response = $this->httpClient->request(
                 'GET',
-                'http://php-symfony-api:80/api/licencies/'.$id,
-//                'http://api/api/licencies/'.$id,
+ //                'http://php-symfony-api:80/api/licencies/'.$id,
+              'http://api/api/licencies/'.$id,
             );
             if($response->getStatusCode() === 200)
             {
