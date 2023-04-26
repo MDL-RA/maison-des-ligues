@@ -6,6 +6,8 @@ use App\Security\Voter\PasswordResetVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\AtelierRepository;
+use App\Repository\HotelRepository;
 
 class AccueilController extends AbstractController {
 
@@ -23,9 +25,13 @@ class AccueilController extends AbstractController {
      * @return Response
      */
     #[Route('/accueil', name: 'app_accueil')]
-    public function accueil(): Response {
-
-        return $this->render('accueil/accueil.html.twig');
+    public function accueil(AtelierRepository $atelierRepo, HotelRepository $hotelRepo): Response {
+        $ateliers = $atelierRepo->findAll();
+        $hotels = $hotelRepo->findAll();
+        return $this->render('accueil/accueil.html.twig',[
+            'ateliers' => $ateliers,
+            'hotels' => $hotels,
+        ]);
     }
-    
+
 }

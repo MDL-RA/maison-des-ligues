@@ -1,3 +1,77 @@
-.parallax-container{
-    height:600px;
+.page{
+    padding: 30px;
+}
+
+.titre_atelier{
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.titre_hebergement{
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.atelier{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.hotel{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.liste_theme{
+    list-style:  inside!important;
+    text-align: left!important;
+}
+
+.titre_theme{
+    text-decoration: underline;
+    margin-bottom: 25px;
+}
+
+.card{
+    text-align: center;
+    
+}
+
+.card-title{
+    font-size: 1.3em!important;
+}
+
+.card-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid ;
+    border-color: #FEC816;
+}
+
+.card-content-hotel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: black;
+    border-top: 2px solid;
+    border-color: #FEC816;
+    margin-bottom: 20px;
+}
+
+.card:hover{
+    box-shadow: 1px 1px 5px 4px rgba(0,0,0,0.25);
+}
+
+.card-title i{
+    padding-top: 1px;
 }

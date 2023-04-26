@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repository;
-
 use App\Entity\Atelier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -53,6 +52,7 @@ class AtelierRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+    
 
 //    public function findOneBySomeField($value): ?Atelier
 //    {

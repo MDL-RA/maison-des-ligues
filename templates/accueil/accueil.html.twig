@@ -4,44 +4,55 @@
 
 {% block body %}
     {% include '/navbar.html.twig' %}
-    <div class="parallax-container">
-      <div class="parallax">
-          <img class="fond-accueil" src="{{ asset("build/image/fond-accueil.jpg") }}" style="width: 200px"></div>
+    <div class="page">
+        <h2 class="titre_atelier">
+            Ateliers :
+        </h2>
+        <div class="atelier">
+            {% for atelier in ateliers %}
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src={{ asset('build/image/mdl.png') }}>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ atelier.libelle }}<i class="material-icons right">more_vert</i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><h4 class="titre_theme">Themes :</h4><i class="material-icons right">close</i></span>
+                        {% for theme in atelier.themes %}
+                            <ul>
+                                <li class="liste_theme">
+                                    {{ theme.libelle }}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div> 
+            {% endfor %}
+        </div>
+        <h2 class="titre_hebergement">
+            Formules d'hébergements :
+        </h2>
+        <div class="hotel">
+            {% for hotel in hotels %}
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src={{ asset('build/image/mdl.png') }}>
+                    </div>
+                    <div class="card-content-hotel">
+                        <h5>{{ hotel.nom }}</h5>
+                        <h6>{{ hotel.adresse1 }}, {{ hotel.cp }}, {{ hotel.ville }}</h6>
+                        {% for tarif in hotel.getTarifs%}
+                            <div>Chambre {{tarif.categorie.libelleCategorie}} {{ tarif.tarifNuite}} €</div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
-      <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-     <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-       <div class="parallax-container">
-      <div class="parallax">
-          <img class="fond-accueil" src="{{ asset("build/image/fond-accueil.jpg") }}" style="width: 200px"></div>
-    </div>
-       <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-       <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-       <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-    
+
+
 
 {% endblock %}

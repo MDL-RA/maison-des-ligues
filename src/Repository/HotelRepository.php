@@ -14,15 +14,13 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Hotel[]    findAll()
  * @method Hotel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class HotelRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class HotelRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Hotel::class);
     }
 
-    public function save(Hotel $entity, bool $flush = false): void
-    {
+    public function save(Hotel $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,8 +28,7 @@ class HotelRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Hotel $entity, bool $flush = false): void
-    {
+    public function remove(Hotel $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -53,7 +50,6 @@ class HotelRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Hotel
 //    {
 //        return $this->createQueryBuilder('h')
