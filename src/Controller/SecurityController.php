@@ -50,9 +50,6 @@ class SecurityController extends AbstractController
     #[Route('/inscription', name: 'app_inscription')]
     public function inscription(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, APIService $apiService, APIController $apiController): Response
     {
-        if($this->getUser()){
-            return $this->redirectToRoute('app_accueil');
-        }
         $user = new Compte();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

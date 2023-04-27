@@ -4,6 +4,9 @@ namespace App\Security;
 
 use App\Entity\Compte;
 use App\Repository\CompteRepository;
+use App\Repository\NuiteRepository;
+use App\Repository\ProposerRepository;
+use App\Repository\RestaurationRepository;
 use App\Service\APIService;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -24,6 +27,10 @@ class EmailVerifier
         private VerifyEmailHelperInterface $verifyEmailHelper,
         private MailerInterface            $mailer,
         private APIService                 $apiService,
+        private ProposerRepository         $proposerRepository,
+        private NuiteRepository             $nuiteRepository,
+        private RestaurationRepository      $restaurationRepository,
+
     )
     {
     }
@@ -90,6 +97,46 @@ class EmailVerifier
             ->to($this->apiService->getLicencieById($user->getNumlicence())[0]['mail'])
             ->subject('Confirmation de la réinitialisation de votre mot de passe')
             ->htmlTemplate('reset_password/confirmation_reset.html.twig');
+        $this->mailer->send($email);
+    }
+
+
+    /**
+     * Méthode renvoyant la confirmation d'inscription a la Maison Des Ligues
+     * @param Compte $user
+     * @return void
+     * @throws TransportExceptionInterface
+     */
+    public function sendConfirmationInscription(Compte $user) : void
+    {
+        $idInscription = $user->getInscription()->getId();
+        $ateliers = $user->getInscription()->getAteliers();
+        $nuites= $this->nuiteRepository->findOneByIdInscription($idInscription);
+        $restaurations = $this->restaurationRepository->findByInscriptionID($idInscription);
+        $fraisInscription = 110;
+        $tarifsTotal = $fraisInscription;
+        $tarifNuites= 0;
+        foreach($nuites as $nuite){
+            $idHotel = $nuite->getHotel()->getId();
+            $idCategorie = $nuite->getCategorie()->getId();
+            $tarifs = $this->proposerRepository->findOneByHotelAndCategorie($idHotel,$idCategorie);
+            $tarifsTotal += $tarifs->getTarifNuite();
+            $tarifNuites += $tarifs->getTarifNuite();
+        }
+        $tarifsRestauration = (count($restaurations) *30);
+        $tarifsTotal += $tarifsRestauration;
+        $email = (new TemplatedEmail())
+            ->from(new Address('no-reply@mdl.fr', 'no-reply'))
+            ->to($this->apiService->getLicencieById($user->getNumlicence())[0]['mail'])
+            ->subject('Confirmation d\'inscription')
+            ->htmlTemplate('participer_inscription/email.html.twig')
+            ->context([
+                'tarifInscription' => 110,
+                'tarifNuites' => $tarifNuites,
+                'tarifRestauration' =>$tarifsRestauration,
+                'tarifTotal' => $tarifsTotal,
+                'ateliers' => $ateliers,
+            ]);
         $this->mailer->send($email);
     }
 }

@@ -54,13 +54,13 @@ class RestaurationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Restauration
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByInscriptionID($inscriptionId): ?array
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.inscription = :inscriptionId')
+            ->setParameter('inscriptionId', $inscriptionId)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

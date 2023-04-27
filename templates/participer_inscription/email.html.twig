@@ -1,0 +1,20 @@
+{% apply inline_css(source('@styles/email-confirmed.css')) %}
+    <div class='email-container'>
+        <div class='box'>
+            <div class= 'content-container'>
+                <h3>Frais d'inscription {{ tarifInscription }}</h3>
+                <h3>Ateliers</h3>
+                {% for atelier in ateliers %}
+                    <p>{{ atelier.libelle }}</p>
+                {% endfor %}
+                <h3>Nuites </h3>
+                    <p>Coût  {{ tarifNuites }}</p>
+               <h3>Restauration</h3>
+                <p>Coût  {{ tarifRestauration }}</p>
+                <h1>Prix Total {{ tarifTotal }}</h1>
+            </div>
+        </div>
+    </div>
+{% endapply %}
+
+

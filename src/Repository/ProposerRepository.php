@@ -54,13 +54,15 @@ class ProposerRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Proposer
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOneByHotelAndCategorie($idHotel, $idCategorie): ?Proposer
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.hotel = :idHotel')
+            ->andWhere('p.categorie = :idCategorie')
+            ->setParameter('idHotel', $idHotel)
+            ->setParameter('idCategorie', $idCategorie)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -9,6 +9,10 @@ use App\Entity\Restauration;
 use App\Repository\AtelierRepository;
 use App\Repository\CategorieChambreRepository;
 use App\Repository\InscriptionRepository;
+use App\Repository\NuiteRepository;
+use App\Repository\ProposerRepository;
+use App\Repository\RestaurationRepository;
+use App\Security\EmailVerifier;
 use App\Service\APIService;
 use App\Service\AtelierService;
 use DateTime;
@@ -23,8 +27,9 @@ use App\Repository\HotelRepository;
 class ParticiperInscriptionController extends AbstractController
 {
     #[Route('', name: 'app_participer')]
-    public function index(APIService $apiService, InscriptionRepository $inscriptionRepository): Response
+    public function index(APIService $apiService, InscriptionRepository $inscriptionRepository, ProposerRepository $proposerRepository, NuiteRepository $nuiteRepository, RestaurationRepository $restaurationRepository): Response
     {
+        
         $user = $apiService->getLicencieById($this->getUser()->getNumlicence());
         return $this->render('participer_inscription/index.html.twig', [
             'user' => $user,
@@ -45,7 +50,7 @@ class ParticiperInscriptionController extends AbstractController
     }
 
     #[Route('/inscription/envoyer', name: 'app_envoyer_inscription')]
-    public function envoyerInscription(Request $request, InscriptionRepository $inscriptionRepository, AtelierRepository $atelierRepository, HotelRepository $hotel, CategorieChambreRepository $categorie, EntityManagerInterface $entityManager) : Response
+    public function envoyerInscription(Request $request, InscriptionRepository $inscriptionRepository, AtelierRepository $atelierRepository, HotelRepository $hotel, CategorieChambreRepository $categorie, EntityManagerInterface $entityManager, EmailVerifier $emailVerifier) : Response
     {
         $dateSamedi = new DateTime('2022-09-17');
         $dateDimanche = new DateTime('2022-09-18');
@@ -105,6 +110,7 @@ class ParticiperInscriptionController extends AbstractController
         $entityManager->persist($inscription);
         $entityManager->flush();
         $this->addFlash('success' ,'Votre inscription a bien été prise en compte');
+        $emailVerifier->sendConfirmationInscription($this->getUser(),);
         return $this->redirectToRoute('app_accueil');
     }
 }

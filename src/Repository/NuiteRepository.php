@@ -54,13 +54,13 @@ class NuiteRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Nuite
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOneByIdInscription($inscription): ?array
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.inscription = :val')
+            ->setParameter('val', $inscription)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
