@@ -12,5 +12,8 @@ import './styles/app.scss';
 // start the Stimulus application
 import './bootstrap';
 import './scripts/materialize-init';
-import './scripts/register';
 import './scripts/modal';
+import './scripts/register';
+import './scripts/selectionHotel';
+import './scripts/resume-inscription';
+import './scripts/form';

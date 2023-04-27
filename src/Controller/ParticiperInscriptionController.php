@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategorieChambreRepository;
 use App\Service\APIService;
 use App\Service\AtelierService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,13 +23,15 @@ class ParticiperInscriptionController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_participer_inscription')]
-    public function participerInscription(AtelierService $atelierService,HotelRepository $hotelRepo) : Response
+    public function participerInscription(AtelierService $atelierService,HotelRepository $hotelRepo, CategorieChambreRepository $categorie) : Response
     {
         $ateliers = $atelierService->getAllAteliers();
         $hotels = $hotelRepo->findAll();
+        $categories = $categorie->findAll();
         return $this->render('participer_inscription/inscription.html.twig',[
             'ateliers' => $ateliers,
             'hotels' => $hotels,
+            'categories' => $categories,
         ]);
     }
 }

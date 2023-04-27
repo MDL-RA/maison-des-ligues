@@ -6,7 +6,9 @@
     {% include '/navbar.html.twig' %}
     <div class="content-inscription-container">
         <div class="box-inscription-information">
+            <h3>Récapitulatif de vos informations</h3>
             <div class="box-information-licencie">
+
                 {% for info in user %}
                     <label for="mail">Email</label>
                     <input disabled value="{{info.mail}}" id="mail" type="text" class="validate"/>
