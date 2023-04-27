@@ -20,7 +20,7 @@ class Restauration
     #[ORM\Column(length: 255)]
     private ?string $typeRepas = null;
 
-    #[ORM\ManyToOne(inversedBy: 'restaurations')]
+    #[ORM\ManyToOne( cascade: ['persist'], inversedBy: 'restaurations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Inscription $inscription = null;
 

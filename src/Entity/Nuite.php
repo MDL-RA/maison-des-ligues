@@ -17,7 +17,7 @@ class Nuite
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateNuitee = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nuites')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'nuites')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Inscription $inscription = null;
 

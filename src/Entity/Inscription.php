@@ -19,13 +19,13 @@ class Inscription
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateInscription = null;
 
-    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Restauration::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Restauration::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $restaurations;
 
-    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Nuite::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'inscription', targetEntity: Nuite::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $nuites;
 
-    #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'inscriptions')]
+    #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'inscriptions',)]
     private Collection $ateliers;
 
     #[ORM\OneToOne(mappedBy: 'inscription', cascade: ['persist', 'remove'])]
