@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    {% include '/navbar.html.twig' %}
+    <div class="page">
+        <h2 class="titre_atelier">
+            Ateliers :
+        </h2>
+        <div class="atelier">
+            {% for atelier in ateliers %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{ atelier.libelle }}<i class="material-icons right">expand_more</i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><h4 class="titre_theme">Themes :</h4><i class="material-icons right">close</i></span>
+                        {% for theme in atelier.themes %}
+                            <ul>
+                                <li class="liste_theme">
+                                    {{ theme.libelle }}
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div> 
+            {% endfor %}
+        </div>
+        <h2 class="titre_hebergement">
+            Formules d'hébergements :
+        </h2>
+        <div class="hotel">
+            {% for hotel in hotels %}
+                <div class="card">
+                    <div class="card-content-hotel">
+                        <h5>{{ hotel.nom }}</h5>
+                            <h6>
+                                <p>{{ hotel.adresse1 }}, {{ hotel.cp }}, {{ hotel.ville }}</p>
+                                <p>Tel: {{ hotel.tel }}</p>
+                                <p>Courriel: {{ hotel.mail }}</p>
+                            </h6>
+                        {% for tarif in hotel.getTarifs%}
+                            <div>Chambre {{tarif.categorie.libelleCategorie}} : {{ tarif.tarifNuite}} €</div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

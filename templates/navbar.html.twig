@@ -1,0 +1,20 @@
+{% block body %}
+   <nav>
+    <div class="nav-wrapper">
+      <a href="{{ path("app_accueil") }}">
+          <img class="img-accueil" src="{{ asset('build/image/mdl.png') }}" />
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <div clas="btn-navbar"> 
+            {% if app.user %}
+                <li><a href="{{path("app_participer") }}">Participation</a></li>
+                <li><a href="{{ path("app_deconnexion") }}" class="waves-effect waves-light btn" >Se déconnecter<a/><li>
+            {% else %}
+                <li><a href="{{ path("app_inscription") }}" class="waves-effect waves-light btn" >Inscription<a/><li> 
+                <li><a href="{{ path("app_login") }}" class="waves-effect waves-light btn" >Connexion<a/><li> 
+            {% endif %}
+        </div>
+      </ul>
+    </div>
+  </nav>
+{% endblock %} 

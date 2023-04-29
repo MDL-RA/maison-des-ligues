@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription aux assises{% endblock %}
+
+{% block body %}
+    {% include '/navbar.html.twig' %}
+    <div class="content-inscription-container">
+        <div class="box-inscription-information">
+            <div class="header">
+                <ul>
+                    <li class="active form_1_progessbar">
+                        <div>
+                            <p>1</p>
+                        </div>
+                    </li>
+                    <li class="form_2_progessbar">
+                        <div>
+                            <p>2</p>
+                        </div>
+                    </li>
+                    <li class="form_3_progessbar">
+                        <div>
+                            <p>3</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="form_wrap">
+                <form id="participer-inscription-form" method="post" action="{{ path('app_envoyer_inscription') }}">
+                    <div class="form_1 data_info">
+                        <h2>Choix des Ateliers</h2>
+                        <h4 style="text-decoration: underline">5 maximums</h4>
+                            <div class="form_container">
+                                <div class="input_wrap_select">
+                                    {% for atelier in ateliers %}
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" id="atelier_select" name="ateliers[]" value="{{ atelier.id }}" class="filled-in"  />
+                                                <span>{{ atelier.libelle }}</span>
+                                            </label>
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form_2 data_info" style="display: none;">
+                        <h2>Réservation hôtel</h2>
+                        <h4 style="text-decoration: underline">Prix détaillé en sélectionnant</h4>
+                            <div class="form_container">
+                                <div class="input_wrap_select">
+                                    <div class="hotel-reservation-container">
+                                            <label>du 16 au 17/09</label>
+                                            <select class="browser-default" name="first_reservation_hotel" id="first_reservation_hotel" required>
+                                                <option value="" disabled selected>Choissisez votre hôtel</option>
+                                                {% for hotel in hotels %}
+                                                    <option value="{{ hotel.id }}">{{ hotel.nom }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label>Type Chambre</label>
+                                            <select class="browser-default" name="first_reservation_categorie" id="first_reservation_categorie" required>
+                                                <option value="" disabled selected>Choissisez votre type de chambre</option>
+                                                {% for categorie in categories %}
+                                                    {% if categorie.libelleCategorie == 'Single' %}
+                                                        <option value="{{ categorie.id }}"
+                                                                data-prix-hotel1="50"
+                                                                data-prix-hotel2="45">
+                                                            {{ categorie.libelleCategorie }}
+                                                        </option>
+                                                    {% elseif categorie.libelleCategorie == 'Double' %}
+                                                        <option value="{{ categorie.id }}"
+                                                                data-prix-hotel1="55"
+                                                                data-prix-hotel2="50">
+                                                            {{ categorie.libelleCategorie }}
+                                                        </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <label>du 17 au 18/09</label>
+                                            <select class="browser-default" name="second_reservation_hotel" id="second_reservation_hotel" required>
+                                                <option value="" disabled selected>Choissisez votre hôtel</option>
+                                                {% for hotel in hotels %}
+                                                    <option value="{{ hotel.id }}">{{ hotel.nom }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <label>Type Chambre</label>
+                                            <select class="browser-default" name="second_reservation_categorie" id="second_reservation_categorie">
+                                                <option value="" disabled selected>Choissisez votre type de chambre</option>
+                                                {% for categorie in categories %}
+                                                    {% if categorie.libelleCategorie == 'Single' %}
+                                                        <option value="{{ categorie.id }}"
+                                                                data-prix-hotel1="50"
+                                                                data-prix-hotel2="45">
+                                                            {{ categorie.libelleCategorie }}
+                                                        </option>
+                                                    {% elseif categorie.libelleCategorie == 'Double' %}
+                                                        <option value="{{ categorie.id }}"
+                                                                data-prix-hotel1="55"
+                                                                data-prix-hotel2="50">
+                                                            {{ categorie.libelleCategorie }}
+                                                        </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form_3 data_info" style="display: none;">
+                        <h2>Réservation Repas Accompagnant(e) (optionnel)</h2>
+                        <h4 style="text-decoration: underline">PRIX: 30€</h4>
+                            <div class="form_container">
+                                <div class="input_wrap_select_accompagnant">
+                                   <div class="reservation-accompagnant-container">
+                                       <p>
+                                           <label>
+                                               <input type="checkbox" name="jour-reservation-accompagnant[]" value="samedi-midi" class="filled-in" />
+                                               <span>Samedi Midi</span>
+                                           </label>
+                                       </p>
+                                       <p>
+                                           <label>
+                                               <input type="checkbox" name="jour-reservation-accompagnant[]" value="samedi-soir" class="filled-in"/>
+                                               <span>Samedi Soir</span>
+                                           </label>
+                                       </p>
+                                       <p>
+                                           <label>
+                                               <input type="checkbox" name="jour-reservation-accompagnant[]" value="dimanche-midi" class="filled-in"/>
+                                               <span>Dimanche Midi</span>
+                                           </label>
+                                       </p>
+                                   </div>
+                                </div>
+                            </div>
+                    </div>
+                </form>
+            </div>
+            <div class="btns_wrap">
+                <div class="common_btns form_1_btns">
+                    <button type="button" class="btn_next waves-effect waves-light btn">Suivant <span class="icon"><ion-icon name="arrow-forward-sharp"></ion-icon></span></button>
+                </div>
+                <div class="common_btns form_2_btns" style="display: none; gap: 20px; margin-top: 10px;">
+                    <button type="button" class="btn_back waves-effect waves-light btn grey lighten-1">Retour</button>
+                    <button type="button" class="btn_next waves-effect waves-light btn">Suivant <span class="icon"><ion-icon name="arrow-forward-sharp"></ion-icon></span></button>
+                </div>
+                <div class="common_btns form_3_btns" style="display: none; gap: 20px; margin-top: 10px;">
+                    <button type="button" class="btn_back waves-effect waves-light btn grey lighten-1">Retour</button>
+                    <button type="button" class="waves-effect waves-light btn" form="participer-inscription-form" id="modal-inscription-button">Confirmer mon inscription !<span class="icon"></ion-icon></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="summary-modal" class="modal">
+        <div class="modal-content">
+            <h4>Résumé de votre inscription</h4>
+            <div id="summary"></div>
+            <h5>Total : <span id="total"></span>€</h5>
+        </div>
+        <div class="modal-footer" style="gap: 50px">
+            <button type="button" class="modal-close btn_back waves-effect waves-light btn grey lighten-1">Retour</button>
+            <button type="submit" class="waves-effect waves-light btn" form="participer-inscription-form" id="modal-inscription-button">Confirmer mon inscription !<span class="icon"></ion-icon></button>
+        </div>
+    </div>
+{% endblock %}

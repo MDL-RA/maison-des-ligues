@@ -1,0 +1,20 @@
+{% apply inline_css(source('@styles/email-confirmed.css')) %}
+<div class='email-container'>
+    <div class='logo-container'>
+        <img src="{{ email.image('@images/mdl-black.png') }}" alt="Logo de la MDL">
+    </div>
+    <div class='box'>
+        <div class= 'content-container'>
+            <div class='image-container'>
+                <img src="{{ email.image('@images/escrime.png') }}" alt="image représentant des personnes pratiquant l\'escrime">
+            </div>
+            <h3>Confirmer votre inscription !</h3>
+            <p>Pour valider votre compte veuillez cliquer sur le bouton ci-dessous</p>
+            <a href='{{ (signedUrl) }}' class='bouton'>
+                Cliquez ici pour valider votre compte
+            </a>
+        </div>
+    </div>
+</div>
+{% endapply %}
+

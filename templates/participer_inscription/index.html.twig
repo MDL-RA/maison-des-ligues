@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription aux assises{% endblock %}
+
+{% block body %}
+    {% include '/navbar.html.twig' %}
+    <div class="content-inscription-container">
+        <div class="box-inscription-information">
+            <h3>Récapitulatif de vos informations</h3>
+            <div class="box-information-licencie">
+                {% for info in user %}
+                    <label for="mail">Email</label>
+                    <input disabled value="{{info.mail}}" id="mail" type="text" class="validate"/>
+                    <label for="prenom">Prenom</label>
+                    <input disabled value="{{info.prenom}}" id="prenom" type="text" class="validate"/>
+                    <label for="nom">Nom</label>
+                    <input disabled value="{{info.nom}}" id="nom" type="text" class="validate"/>
+                    <label for="numlicence">Numéro licencié</label>
+                    <input disabled value="{{info.numlicence}}" id="numlicence" type="text" class="validate"/>
+                {% endfor %}
+            </div>
+            {% if app.user.inscription is null%}
+                <a href="{{ path('app_participer_inscription') }}" class="waves-effect waves-light btn">S'inscrire aux assises !</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
